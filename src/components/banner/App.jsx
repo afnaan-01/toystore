@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-const Banner = () => {
+const Banner = ({imageUrl}) => {
   return (
     <section className="bg-gradient-to-br from-blue-100 to-pink-100 h-full">
      <img
-      src="/images/banner.jpg"
+      src={imageUrl}
       alt="Banner Image"
       className="w-full h-full object-cover mb-6"
       height={1000}

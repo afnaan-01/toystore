@@ -10,8 +10,10 @@ export default function Home() {
    <div className="h-full">
     <div className="h-screen w-">
       <Navbar />
-      <Banner />
+      <Banner imageUrl={"/images/banner.jpg"} />
       <Collection />
+      <Products/>
+      <Banner imageUrl={"https://i.pinimg.com/736x/58/2a/cd/582acdd89636b709a78c27a2d6440700.jpg"}  />
       <Products />
     </div>
    </div>

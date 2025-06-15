@@ -25,8 +25,8 @@ const App = ({ id, title, imageUrl, price }) => {
                     <Button variant={"addcart"}>
                         Add to cart
                     </Button>
-                    <Button variant="shopnow">
-                        Shop Now
+                    <Button variant="buynow">
+                        Buy Now
                     </Button>
                 </div>
             </Link>
