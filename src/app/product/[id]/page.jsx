@@ -43,12 +43,12 @@ const ProductPage = ({ params }) => {
             {products.title}
           </h1>
 
-          <p className="mt-4 text-gray-600 text-lg sm:text-base leading-relaxed">
+          <p className="mt-3 text-gray-600 text-lg sm:text-base leading-relaxed">
             {products.description}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-5">
           {/* Product Image */}
           <div className="w-full">
             <img
