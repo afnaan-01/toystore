@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar/App";
+import 'remixicon/fonts/remixicon.css'
 
 
 // Mock product data (replace with real fetch later)
