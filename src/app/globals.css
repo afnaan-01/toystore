@@ -112,6 +112,12 @@
   --sidebar-ring: oklch(0.488 0.243 264.376);
 }
 
+.baloo-2-all {
+  font-family: "Baloo 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 
 @layer base {
   * {
