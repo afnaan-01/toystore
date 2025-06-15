@@ -29,7 +29,7 @@ const ProductPage = ({ params }) => {
   // Access product ID from URL
   const { id } = params;
 
-  const products = allProducts.find((product)=> product.id === id);
+  const products = allProducts.find((product) => product.id === id);
 
   return (
 
@@ -37,6 +37,17 @@ const ProductPage = ({ params }) => {
       <Navbar />
 
       <section className="px-4 py-10 max-w-6xl mx-auto">
+
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+            {products.title}
+          </h1>
+
+          <p className="mt-4 text-gray-600 text-sm sm:text-base leading-relaxed">
+            {products.description}
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Product Image */}
           <div className="w-full">
@@ -49,18 +60,11 @@ const ProductPage = ({ params }) => {
 
           {/* Product Details */}
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-              {products.title}
-            </h1>
-
-            <p className="mt-4 text-gray-600 text-sm sm:text-base leading-relaxed">
-              {products.description}
-            </p>
 
             <p className="text-blue-600 text-xl font-semibold mt-2">
               ₹{products.price}
             </p>
-            
+
             <button className="mt-6 bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition-all text-sm">
               Add to Cart
             </button>
