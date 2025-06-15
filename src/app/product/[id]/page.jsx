@@ -39,11 +39,11 @@ const ProductPage = ({ params }) => {
       <section className="px-4 py-10 max-w-6xl mx-auto">
 
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+          <h1 className="text-3xl sm:text-3xl font-bold text-gray-800">
             {products.title}
           </h1>
 
-          <p className="mt-4 text-gray-600 text-sm sm:text-base leading-relaxed">
+          <p className="mt-4 text-gray-600 text-lg sm:text-base leading-relaxed">
             {products.description}
           </p>
         </div>
