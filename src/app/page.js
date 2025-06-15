@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import Navbar from "@/components/navbar/App";
 import Banner from "@/components/banner/App";
 import Collection from "@/sections/collection/App";
+import Products from "@/sections/products/App";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Navbar />
       <Banner />
       <Collection />
+      <Products />
     </div>
    </div>
   );
