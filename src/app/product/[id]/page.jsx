@@ -60,8 +60,8 @@ const ProductPage = ({ params }) => {
 
             {/* image changer */}
             <div className="w-full flex justify-between items-center mt-4">
-               <span className="text-2xl"><i class="ri-arrow-left-circle-line"></i></span>
-               <span className="text-2xl"><i class="ri-arrow-right-circle-line"></i></span>
+               <span className="text-4xl"><i class="ri-arrow-left-circle-line"></i></span>
+               <span className="text-4xl"><i class="ri-arrow-right-circle-line"></i></span>
             </div>
 
           </div>
