@@ -1,6 +1,6 @@
 import Card from "@/components/card/App";
 
-const App = () => {
+const App = ({text}) => {
   const products = [
     {
       id: "1",
@@ -24,8 +24,8 @@ const App = () => {
 
   return (
     <section className="px-4 py-10 max-w-7xl mx-auto">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-        Popular Toys
+      <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
+        {text}
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
