@@ -56,6 +56,13 @@ const ProductPage = ({ params }) => {
               alt={products.title}
               className="w-full h-auto rounded-lg object-cover"
             />
+
+            {/* image changer */}
+            <div className="w-full flex justify-between items-center mt-4">
+               <span className="text-2xl"><i class="ri-arrow-left-circle-line"></i></span>
+               <span className="text-2xl"><i class="ri-arrow-right-circle-line"></i></span>
+            </div>
+
           </div>
 
           {/* Product Details */}
