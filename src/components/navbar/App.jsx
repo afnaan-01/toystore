@@ -29,7 +29,7 @@ const Navbar = () => {
           <Link href="/cart" className="text-gray-600 hover:text-blue-600 flex items-center">
             <RiShoppingCartLine className="mr-1" /> Cart
           </Link>
-          <Link href="/login" className="text-gray-600 hover:text-blue-600 flex items-center">
+          <Link href="/auth" className="text-gray-600 hover:text-blue-600 flex items-center">
             <RiUserLine className="mr-1" /> Login
           </Link>
         </nav>
@@ -43,7 +43,7 @@ const Navbar = () => {
           <Link href="/cart" className="text-gray-700 hover:text-blue-600 flex items-center">
             <RiShoppingCartLine className="mr-1" /> Cart
           </Link>
-          <Link href="/login" className="text-gray-700 hover:text-blue-600 flex items-center">
+          <Link href="/auth" className="text-gray-700 hover:text-blue-600 flex items-center">
             <RiUserLine className="mr-1" /> Login
           </Link>
         </nav>
