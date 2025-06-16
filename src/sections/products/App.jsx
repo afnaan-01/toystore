@@ -25,7 +25,7 @@ const App = ({text}) => {
   ];
 
   return (
-    <section className="px-4 py-10 max-w-7xl mx-auto">
+    <section className="px-4 py-10 max-w-7xl mx-auto ">
       <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
         {text}
       </h2>
