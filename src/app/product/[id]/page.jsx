@@ -5,7 +5,7 @@ import 'remixicon/fonts/remixicon.css'
 import { Button } from "@/components/ui/button";
 import Products from "@/sections/products/App"; 
 import Footer from "@/components/footer/App";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 
@@ -36,7 +36,7 @@ const allProducts = [
 const ProductPage = ({ params }) => {
 
   const qtyRef = useRef(null);
-  const useNavigate = useRouter();
+  const router = useRouter();
 
   // Access product ID from URL
   const { id } = params;
@@ -109,7 +109,7 @@ const ProductPage = ({ params }) => {
               <Button variant={"addcart"}>
                 Add to cart
               </Button>
-              <Button variant={"buynow"} onClick={() => useNavigate.push(`/checkout/${products.id}/${qtyRef.current.value}`)}>
+              <Button variant={"buynow"} onClick={() => router.push(`/checkout/${products.id}/${qtyRef.current.value}`)}>
                 Buy Now
               </Button>
             </div>
