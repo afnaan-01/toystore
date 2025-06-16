@@ -1,10 +1,10 @@
 import Link from "next/link";
 import 'remixicon/fonts/remixicon.css'
 
-const CollectionCard = ({ title, imageUrl, link }) => {
+const CollectionCard = ({ title, imageUrl, id }) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 group">
-      <Link href={link}>
+      <Link href={`/collection/${id}`}>
         <div className="relative w-full h-48 sm:h-60 md:h-72">
           <img
             src={imageUrl}
