@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import React from "react";
 import ProductCard from "@/components/card/App"; // Use the card you already built
 import { allProducts } from "@/helper/data";
 import { collections } from "@/helper/data";
@@ -7,9 +8,9 @@ import { useParams } from "next/navigation";
 import Navbar from "@/components/navbar/App";
 import Footer from "@/components/footer/App";
 
-export default function ShopPage() {
+export default function ShopPage({params}) {
 
-  const { id } = useParams();
+  const { id } = React.use(params);
   console.log("CollectionId:" + id);
   console.log("Product collectionId:" + allProducts[1].collectionId);
   const filteredProducts = allProducts.filter((product) => product.collectionId === parseInt(id));
