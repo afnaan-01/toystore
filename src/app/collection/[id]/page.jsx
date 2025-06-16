@@ -8,8 +8,11 @@ import Navbar from "@/components/navbar/App";
 export default function ShopPage() {
 
     const {id} = useParams();
-
-    const filteredProducts = allProducts.filter((product) => product.collectionId === id);
+   console.log("CollectionId:" + id);
+   console.log("Product collectionId:" + allProducts[1].collectionId);
+    const filteredProducts = allProducts.filter((product) => product.collectionId === parseInt(id));
+    console.log("All Products:", allProducts);
+    console.log("Filtered Products:", filteredProducts);
 
   const [sortOption, setSortOption] = useState("default");
 
@@ -19,7 +22,7 @@ export default function ShopPage() {
   //   return 0;
   // });
 
-  const sortedProducts = [...allProducts];
+  const sortedProducts = [...filteredProducts];
 
   return (
     <div>
