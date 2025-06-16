@@ -1,8 +1,12 @@
+"use client"
+
 import Navbar from "@/components/navbar/App";
 import 'remixicon/fonts/remixicon.css'
 import { Button } from "@/components/ui/button";
 import Products from "@/sections/products/App"; 
 import Footer from "@/components/footer/App";
+import { useRouter } from "next/router";
+import { useRef } from "react";
 
 
 // Mock product data (replace with real fetch later)
@@ -30,6 +34,10 @@ const allProducts = [
 ];
 
 const ProductPage = ({ params }) => {
+
+  const qtyRef = useRef(null);
+  const useNavigate = useRouter();
+
   // Access product ID from URL
   const { id } = params;
 
@@ -93,6 +101,7 @@ const ProductPage = ({ params }) => {
                 min="1"
                 defaultValue="1"
                 className="w-20 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                useRef={qtyRef}
               />
               </div>
 
@@ -100,7 +109,7 @@ const ProductPage = ({ params }) => {
               <Button variant={"addcart"}>
                 Add to cart
               </Button>
-              <Button variant={"buynow"}>
+              <Button variant={"buynow"} onClick={() => useNavigate.push(`/checkout/${products.id}/${qtyRef.current.value}`)}>
                 Buy Now
               </Button>
             </div>

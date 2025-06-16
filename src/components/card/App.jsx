@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 const App = ({ id, title, imageUrl, price }) => {
+
+    const useNavigate = useRouter();
+
     return (
         <div className="bg-white rounded-xl shadow hover:shadow-lg overflow-hidden transition-all">
             <Link href={`/product/${id}`}>
@@ -25,7 +29,7 @@ const App = ({ id, title, imageUrl, price }) => {
                     <Button variant={"addcart"}>
                         Add to cart
                     </Button>
-                    <Button variant="buynow">
+                    <Button variant="buynow" onClick={() => useNavigate.push(`/checkout/${id}/${1}}`)}>
                         Buy Now
                     </Button>
                 </div>
