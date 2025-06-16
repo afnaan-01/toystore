@@ -1,3 +1,5 @@
+"use client"
+
 import Card from "@/components/card/App";
 
 const App = ({text}) => {
