@@ -25,7 +25,7 @@ const App = ({ id, title, imageUrl, price }) => {
                 <div className="flex gap-1 items-center">
                     <p className="text-blue-600 font-bold text-2xl">₹{price}</p>
                     <div className="flex gap-1">
-                        <p>M.R.P:</p>
+                        <p>M.R.P: </p>
                         <p className="text-gray-600 line-through">₹3000</p>
                     </div>
                 </div>
