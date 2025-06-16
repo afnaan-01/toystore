@@ -115,7 +115,7 @@ const ProductPage = ({ params }) => {
             </div>
 
             <div className="mt-6 border-b border-gray-400 pb-4">
-              <h2 className="text-xl">About This Product:</h2>
+              <h2 className="text-xl">About This Product: </h2>
             </div>
 
           </div>
