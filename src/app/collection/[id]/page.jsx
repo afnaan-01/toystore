@@ -1,22 +1,38 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import ProductCard from "@/components/card/App"; // Use the card you already built
 import { allProducts } from "@/helper/data";
 import { collections } from "@/helper/data";
 import Navbar from "@/components/navbar/App";
 import Footer from "@/components/footer/App";
+import axios from "axios";
 
 export default function ShopPage({params}) {
-
-  const { id } = React.use(params);
-  console.log("CollectionId:" + id);
-  console.log("Product collectionId:" + allProducts[1].collectionId);
+ const [products, setProducts] = useState([]);
+ const [loading, setLoading] = useState(true);
+ const { id } = React.use(params);
+ 
+ useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+         const res = await axios.post("/api/product-fatch-by-collection-id", {collectionId: parseInt(id),});
+        //  console.log(res.data.products)
+         //const data = await res.json();
+        console.log('Fetched data:', res.data.products);  
+        setProducts(res.data.products || []);  
+      } catch (err) {
+        console.error('Error fetching products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchProducts();
+  }, []);
+  console.log(products)
   const filteredProducts = allProducts.filter((product) => product.collectionId === parseInt(id));
-  console.log("All Products:", allProducts);
-  console.log("Filtered Products:", filteredProducts);
   const collection = collections.find((collection) => collection.id === parseInt(id));
-
   const [sortOption, setSortOption] = useState("default");
 
   // const sortedProducts = [...filteredProducts].sort((a, b) => {
@@ -61,10 +77,10 @@ export default function ShopPage({params}) {
 
           {/* Product Grid */}
           <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedProducts.map((product) => (
+            {products.map((product) => (
               <ProductCard
-                key={Math.random()}
-                id={product.id}
+                key={product._id}
+                id={product._id}
                 title={product.title}
                 imageUrl={product.imageUrl}
                 price={product.price}
