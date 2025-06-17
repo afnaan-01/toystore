@@ -1,8 +1,28 @@
 "use client"
 
 import Card from "@/components/card/App";
+import { useEffect, useState } from "react";
 
-const App = ({text}) => {
+const App = ({ text }) => {
+
+  const colorNames = [
+   "slate", "gray", "zinc", "neutral", "stone",
+  "red", "orange", "amber", "yellow", "lime",
+  "green", "emerald", "teal", "cyan", "sky",
+  "blue", "indigo", "violet", "purple", "fuchsia",
+  "pink", "rose", "black", "white", "transparent", "current"
+  ];
+
+  const [bgColor, setBgColor] = useState();
+
+  useEffect(() => {
+
+    const colorIndex = Math.floor(Math.random() * colorNames.length);
+    setBgColor(colorNames[colorIndex]);
+
+  }, [])
+
+
   const products = [
     {
       id: "1",
@@ -25,23 +45,25 @@ const App = ({text}) => {
   ];
 
   return (
-    <section className="px-4 py-10 max-w-7xl mx-auto ">
-      <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
-        {text}
-      </h2>
+    <div className={`bg-${bgColor}-50`}>
+      <section className="px-4 py-10 max-w-7xl mx-auto">
+        <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
+          {text}
+        </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <Card
-            key={product.id}
-            id={product.id}
-            title={product.title}
-            imageUrl={product.imageUrl}
-            price={product.price}
-          />
-        ))}
-      </div>
-    </section>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+          {products.map((product) => (
+            <Card
+              key={product.id}
+              id={product.id}
+              title={product.title}
+              imageUrl={product.imageUrl}
+              price={product.price}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
 

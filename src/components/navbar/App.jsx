@@ -24,12 +24,12 @@ const Navbar = () => {
 
         {/* Nav Links - Desktop */}
         <nav className="hidden md:flex space-x-6">
-          <Link href="/" className="text-gray-600 hover:text-blue-600">Home</Link>
-          <Link href="/shop" className="text-gray-600 hover:text-blue-600">Shop</Link>
-          <Link href="/cart" className="text-gray-600 hover:text-blue-600 flex items-center">
+          <Link href="/" className="text-gray-600 hover:text-blue-600 font-bold">Home</Link>
+          <Link href="/shop" className="text-gray-600 hover:text-blue-600 font-bold">Shop</Link>
+          <Link href="/cart" className="text-gray-600 hover:text-blue-600 flex items-center font-bold">
             <RiShoppingCartLine className="mr-1" /> Cart
           </Link>
-          <Link href="/auth" className="text-gray-600 hover:text-blue-600 flex items-center">
+          <Link href="/auth" className="text-gray-600 hover:text-blue-600 flex items-center font-bold">
             <RiUserLine className="mr-1" /> Login
           </Link>
         </nav>
