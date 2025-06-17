@@ -4,7 +4,6 @@ import React from "react";
 import ProductCard from "@/components/card/App"; // Use the card you already built
 import { allProducts } from "@/helper/data";
 import { collections } from "@/helper/data";
-import { useParams } from "next/navigation";
 import Navbar from "@/components/navbar/App";
 import Footer from "@/components/footer/App";
 

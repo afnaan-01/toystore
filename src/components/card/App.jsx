@@ -9,7 +9,7 @@ const App = ({ id, title, imageUrl, price }) => {
     const router = useRouter();
 
     return (
-        <div className="bg-white rounded-xl shadow hover:shadow-lg overflow-hidden transition-all">
+        <div className="relative bg-white rounded-lg shadow hover:shadow-lg overflow-hidden hover:bottom-1 transition-all">
             <Link href={`/product/${id}`}>
                 <div className="relative w-full h-56 sm:h-64">
                     <img
