@@ -82,7 +82,7 @@ export default function ShopPage({params}) {
                 key={product._id}
                 id={product._id}
                 title={product.title}
-                imageUrl={product.imageUrl}
+                imageUrl={product.images[0]}
                 price={product.price}
               />
             ))}
