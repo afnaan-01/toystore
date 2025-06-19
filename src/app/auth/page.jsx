@@ -4,7 +4,7 @@ import Navbar from "@/components/navbar/App";
 const App = () => {
   return (
     <div>
-      <Navbar />
+      <Navbar newCss={"static"} />
       <Auth />
     </div>
   );

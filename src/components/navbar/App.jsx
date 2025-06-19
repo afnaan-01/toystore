@@ -3,11 +3,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { RiMenuLine, RiCloseLine, RiShoppingCartLine, RiUserLine } from "react-icons/ri";
 
-const Navbar = () => {
+const Navbar = ({newCss}) => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
+    <header className={`bg-white shadow-md sticky top-0 z-50 ${newCss}`}>
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="text-xl font-bold text-blue-600">
