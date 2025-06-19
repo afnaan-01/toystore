@@ -1,9 +1,11 @@
-import { createContext } from "react";
+"use client";
+
+import { createContext, useContext, useState } from "react";
 
 
 const CartContext = createContext();
 
-const CarrtProvider = ({children})=>{
+const CartProvider = ({children})=>{
 
     const [cartItems, setCartItems] = useState([]);
     const [cartPrice, setCartPrice] = useState(0);
@@ -30,4 +32,4 @@ const useCart = () => useContext(CartContext);
 
 export default useCart;
 
-export { CarrtProvider, CartContext };
+export { CartProvider, CartContext };

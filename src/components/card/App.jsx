@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import useCart from "@/allContext/cart";
 
 const App = ({ id, title, imageUrl, price }) => {
+
+    const { addToCart, cartItems } = useCart();
 
     const router = useRouter();
 
@@ -29,7 +32,10 @@ const App = ({ id, title, imageUrl, price }) => {
                         <p className="text-gray-600 line-through">₹3000</p>
                     </div>
                 </div>
-                <Button variant={"addcart"}>
+                <Button variant={"addcart"} onClick={() => {
+                    addToCart(id);
+                    console.log(cartItems);
+                    }}>
                     Add to cart
                 </Button>
                 <Button variant="buynow" onClick={() => router.push(`/checkout/${id}/1}`)}>
