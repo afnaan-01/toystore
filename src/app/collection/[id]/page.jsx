@@ -2,13 +2,18 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import ProductCard from "@/components/card/App"; // Use the card you already built
-import { allProducts } from "@/helper/data";
+// import { allProducts } from "@/helper/data";
 import { collections } from "@/helper/data";
 import Navbar from "@/components/navbar/App";
 import Footer from "@/components/footer/App";
 import axios from "axios";
+import useAllProducts from "@/allContext/allproducts";
 
-export default function ShopPage({params}) {
+export default function CollectionPage({params}) {
+
+  const { allProducts, setAllProducts } = useAllProducts();
+  
+
  const [products, setProducts] = useState([]);
  const [loading, setLoading] = useState(true);
  const { id } = React.use(params);
@@ -21,6 +26,7 @@ export default function ShopPage({params}) {
          //const data = await res.json();
         console.log('Fetched data:', res.data.products);  
         setProducts(res.data.products || []);  
+        setAllProducts(res.data.products || []);
       } catch (err) {
         console.error('Error fetching products:', err);
       } finally {
@@ -31,7 +37,7 @@ export default function ShopPage({params}) {
     fetchProducts();
   }, []);
   console.log(products)
-  const filteredProducts = allProducts.filter((product) => product.collectionId === parseInt(id));
+  // const filteredProducts = allProducts.filter((product) => product.collectionId === parseInt(id));
   const collection = collections.find((collection) => collection.id === parseInt(id));
   const [sortOption, setSortOption] = useState("default");
 
@@ -41,7 +47,7 @@ export default function ShopPage({params}) {
   //   return 0;
   // });
 
-  const sortedProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts];
+  // const sortedProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts];
 
   return (
     <div>
