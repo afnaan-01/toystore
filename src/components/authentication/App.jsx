@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Navbar from "../navbar/App";
 
 const App = () => {
   const [authMode, setAuthMode] = useState("login"); // 'login' or 'signup'
@@ -10,17 +11,15 @@ const App = () => {
         {/* Toggle Tabs */}
         <div className="flex justify-center mb-6 space-x-4">
           <button
-            className={`text-sm font-semibold ${
-              authMode === "login" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
-            }`}
+            className={`text-sm font-semibold ${authMode === "login" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+              }`}
             onClick={() => setAuthMode("login")}
           >
             Login
           </button>
           <button
-            className={`text-sm font-semibold ${
-              authMode === "signup" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
-            }`}
+            className={`text-sm font-semibold ${authMode === "signup" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+              }`}
             onClick={() => setAuthMode("signup")}
           >
             Sign Up

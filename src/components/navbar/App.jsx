@@ -23,9 +23,9 @@ const Navbar = () => {
         </button>
 
         {/* Nav Links - Desktop */}
-        <nav className="hidden md:flex space-x-6">
+        <nav className="hidden md:flex space-x-6 md:items-center">
           <Link href="/" className="text-gray-600 hover:text-blue-600 font-bold">Home</Link>
-          <Link href="/shop" className="text-gray-600 hover:text-blue-600 font-bold">Shop</Link>
+          <Link href="/collection/all-products" className="text-gray-600 hover:text-blue-600 font-bold">Shop</Link>
           <Link href="/cart" className="text-gray-600 hover:text-blue-600 flex items-center font-bold">
             <RiShoppingCartLine className="mr-1" /> Cart
           </Link>

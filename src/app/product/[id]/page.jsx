@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Products from "@/sections/products/App"; 
 import Footer from "@/components/footer/App";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 
 // Mock product data (replace with real fetch later)
