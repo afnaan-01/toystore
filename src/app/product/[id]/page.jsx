@@ -39,6 +39,16 @@ const ProductPage = ({ params }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-5">
           {/* Product Image */}
           <div className="w-full">
+
+            {/* <div className="w-full overflow-scroll flex">
+              {
+                products.images.map((image, ind) => {
+                  return <img key={ind} src={image} alt={products.productName} className="w-full h-auto rounded-lg object-cover mb-4" />
+                })
+              }
+            </div> */}
+
+
             <img
               src={products.images[0]}
               alt={products.productName}
@@ -57,7 +67,7 @@ const ProductPage = ({ params }) => {
           <div className="flex flex-col gap-3">
 
             <div>
-              <h1 className="text-3xl sm:text-3xl font-bold text-gray-800">
+              <h1 className="text-xl sm:text-3xl font-bold text-gray-800">
                 {products.productName}
               </h1>
             </div>
