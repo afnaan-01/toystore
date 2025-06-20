@@ -14,7 +14,8 @@ const App = ({ id, title, imageUrl, price }) => {
     return (
         <div className="relative bg-white rounded-lg shadow hover:shadow-lg overflow-hidden hover:bottom-1 transition-all group">
             <Link href={`/product/${id}`}>
-                <div className="relative w-full h-56 sm:h-64 overflow-hidden">
+                <div className="relative w-full aspect-auto overflow-hidden"> 
+                     {/* h-56 sm:h-64 */}
                     <img
                         src={imageUrl}
                         alt={title}
