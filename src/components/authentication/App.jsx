@@ -158,7 +158,7 @@ if (result?.error) {
 
         {/* Social login (optional) */}
  
-          Continue with Google
+          Continue with Google 
         {/* </button> */}
       </div>
     </section>
