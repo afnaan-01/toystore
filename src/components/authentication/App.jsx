@@ -1,9 +1,7 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { signIn, signOut, useSession } from "next-auth/react";
+ 
 
 const App = () => {
   const [authMode, setAuthMode] = useState("login"); // 'login' or 'signup'
@@ -79,17 +77,15 @@ if (result?.error) {
         {/* Toggle Tabs */}
         <div className="flex justify-center mb-6 space-x-4">
           <button
-            className={`text-sm font-semibold ${
-              authMode === "login" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
-            }`}
+            className={`text-sm font-semibold cursor-pointer ${authMode === "login" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+              }`}
             onClick={() => setAuthMode("login")}
           >
             Login
           </button>
           <button
-            className={`text-sm font-semibold ${
-              authMode === "signup" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
-            }`}
+            className={`text-sm font-semibold cursor-pointer ${authMode === "signup" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+              }`}
             onClick={() => setAuthMode("signup")}
           >
             Sign Up
@@ -134,7 +130,7 @@ if (result?.error) {
           )}
 
           {authMode === "login" && (
-            <div className="flex items-center justify-between text-sm text-gray-600">
+            <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between text-sm text-gray-600">
               <label className="flex items-center gap-2">
                 <input type="checkbox" />
                 Remember me
@@ -147,7 +143,7 @@ if (result?.error) {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-all text-sm"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-all text-sm cursor-pointer"
           >
             {authMode === "login" ? "Login" : "Create Account"}
           </button>
@@ -161,10 +157,7 @@ if (result?.error) {
         </div>
 
         {/* Social login (optional) */}
-        <button 
-          onClick={handleGoogleLogin}
-          className="w-full border flex justify-center items-center gap-2 text-sm py-2 rounded hover:bg-gray-100">
-          <img src="/icons/google.svg" alt="Google" className="h-4 w-4" />
+ 
           Continue with Google
         </button>
       </div>
