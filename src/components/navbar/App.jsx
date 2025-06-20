@@ -2,13 +2,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { RiMenuLine, RiCloseLine, RiShoppingCartLine, RiUserLine } from "react-icons/ri";
-// import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { LogOutIcon } from "lucide-react";
 
 
 const Navbar = ({ newCss }) => {
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [session, setSession] = useState(false);
 
   return (
     <header className={`bg-white shadow-md sticky top-0 z-50 ${newCss}`}>
@@ -33,7 +34,7 @@ const Navbar = ({ newCss }) => {
           <Link href="/cart" className="text-gray-600 hover:text-blue-600 flex items-center font-bold">
             <RiShoppingCartLine className="mr-1" /> Cart
           </Link>
-          {/* {session ? (
+          {session ? (
             <p className="text-gray-600 hover:text-blue-600 flex flex-col items-center font-bold">
               <button onClick={() => { signOut() }}><LogOutIcon className="mr-1" /> <span>Logout </span></button>
             </p>
@@ -42,7 +43,7 @@ const Navbar = ({ newCss }) => {
               <RiUserLine className="mr-1" /> Login
             </Link>
           )
-          } */}
+          }
         </nav>
       </div>
 

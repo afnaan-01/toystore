@@ -8,6 +8,7 @@ import Footer from "@/components/footer/App";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import useAllProducts from "@/allContext/allproducts";
+import axios from "axios";
 
 
 const ProductPage = ({ params }) => {
@@ -23,16 +24,17 @@ const ProductPage = ({ params }) => {
   useEffect(() => {
       const fetchProducts = async () => {
         try {
-           const res = await axios.post("/api/product-fatch-by-collection-id", {collectionId: parseInt(id),});
+           const res = await axios.post("/api/fatch-single-product", {_id: parseInt(id),});
           //  console.log(res.data.products)
            //const data = await res.json();
           console.log('Fetched data:', res.data.products);  
-          setProducts(res.data.products || []);  
-          setAllProducts(res.data.products || []);
+          // setProducts(res.data.products || []);  
+          // setAllProducts(res.data.products || []);
         } catch (err) {
           console.error('Error fetching products:', err);
+          console.log("Error Here");
         } finally {
-          setLoading(false);
+          // setLoading(false);
         }
       };
     
@@ -41,7 +43,7 @@ const ProductPage = ({ params }) => {
 
 
   const product = allProducts.find((product) => product._id === id);
-  console.log(allProducts)
+  // console.log(allProducts)
 
   if (!product) {
     return <div>...Loading</div> 

@@ -9,6 +9,7 @@ import { signIn } from "next-auth/react"; // Ensure you have next-auth installed
 const App = () => {
   const [authMode, setAuthMode] = useState("login"); // 'login' or 'signup'
   const { register, handleSubmit, reset } = useForm();
+  const [otpSend, setOtpSend] = useState(true);
 
 
 
@@ -131,6 +132,16 @@ if (result?.error) {
               required
             />
           )}
+
+          {authMode === "signup" && otpSend && (
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              {...register("otp", {required: authMode === "signup" })}
+              className="w-full border rounded px-4 py-2 text-sm borded"
+              required
+            />
+           )}
 
           {authMode === "login" && (
             <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between text-sm text-gray-600">
