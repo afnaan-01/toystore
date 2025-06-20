@@ -1,10 +1,75 @@
 "use client";
+import axios from "axios";
 import { useState } from "react";
-import Navbar from "../navbar/App";
-import 'remixicon/fonts/remixicon.css';
+ 
 
 const App = () => {
   const [authMode, setAuthMode] = useState("login"); // 'login' or 'signup'
+  const { register, handleSubmit, reset } = useForm();
+
+
+
+   // Login handler
+  const handleLogin = async (data) => {
+     const result = await signIn('credentials',{
+      redirect: false,
+      email: data.email,
+      password: data.password
+     }) 
+   console.log(result)
+   if(result?.error){
+    toast.error(result?.error)
+   }
+   else{
+     toast.success("Login sucessful")
+   }
+  };
+
+  // Signup handler
+  const handleSignup = async (data) => {
+    if(data.password != data.confirmPassword){
+       toast.error("Confirm Password is not same please try again")
+    }
+    else{
+      try {
+      const response = await axios.post('/api/sign-up', data);
+      
+      if (response.status === 201) {
+        toast.success(response.data.message);
+        //router.replace('/');
+      } else {
+        toast.success(response.data.message);
+      }
+
+    } catch (error) {
+     
+         toast.error(error.response.data.message)
+    }
+    finally{
+        reset();
+    }
+  }
+};
+   
+  const onSubmit = (data) => {
+    if (authMode === "login") {
+      handleLogin(data);
+    } else {
+      handleSignup(data);
+    }
+
+  };
+
+  //login with google
+
+  const handleGoogleLogin = async () => {
+   const result = await signIn("google", { redirect: false });
+
+if (result?.error) {
+  toast.error(result.error); 
+}
+      
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
@@ -28,11 +93,12 @@ const App = () => {
         </div>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form className="space-y-4"  onSubmit={handleSubmit(onSubmit)}>
           {authMode === "signup" && (
             <input
               type="text"
               placeholder="Full Name"
+               {...register("name", { required: authMode === "signup" })}
               className="w-full border rounded px-4 py-2 text-sm"
               required
             />
@@ -41,12 +107,14 @@ const App = () => {
           <input
             type="email"
             placeholder="Email"
+            {...register("email", { required: true })}
             className="w-full border rounded px-4 py-2 text-sm"
             required
           />
           <input
             type="password"
             placeholder="Password"
+            {...register("password", { required: true })}
             className="w-full border rounded px-4 py-2 text-sm"
             required
           />
@@ -55,6 +123,7 @@ const App = () => {
             <input
               type="password"
               placeholder="Confirm Password"
+              {...register("confirmPassword", { required: authMode === "signup" })}
               className="w-full border rounded px-4 py-2 text-sm"
               required
             />
@@ -88,9 +157,7 @@ const App = () => {
         </div>
 
         {/* Social login (optional) */}
-        <button className="w-full border flex justify-center items-center gap-2 text-sm py-2 rounded hover:bg-gray-100 md:cursor-pointer">
-          {/* <img src="/icons/google.svg" alt="Google" className="h-4 w-4" /> */}
-          <i className="ri-google-fill"></i>
+ 
           Continue with Google
         </button>
       </div>
