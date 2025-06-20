@@ -1,6 +1,9 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { signIn } from "next-auth/react"; // Ensure you have next-auth installed
  
 
 const App = () => {
@@ -157,9 +160,9 @@ if (result?.error) {
         </div>
 
         {/* Social login (optional) */}
- 
+         <button onClick={handleGoogleLogin}>
           Continue with Google 
-        {/* </button> */}
+        </button>
       </div>
     </section>
   );
