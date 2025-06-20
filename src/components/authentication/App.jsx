@@ -159,7 +159,7 @@ if (result?.error) {
         {/* Social login (optional) */}
  
           Continue with Google
-        </button>
+        {/* </button> */}
       </div>
     </section>
   );
