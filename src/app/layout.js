@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/allContext/cart";
 import { AllProductsProvider } from "@/allContext/allproducts";
+import { Toaster } from "sonner";
 
 
 const geistSans = Geist({
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
         <AllProductsProvider>
           <CartProvider>
             {children}
+            <Toaster position="top-center" richColors />
           </CartProvider>
         </AllProductsProvider>
       </body>

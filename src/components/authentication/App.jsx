@@ -147,6 +147,7 @@ if (result?.error) {
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-all text-sm cursor-pointer"
+            onSubmit={authMode === "login" ? handleLogin : handleSignup}
           >
             {authMode === "login" ? "Login" : "Create Account"}
           </button>

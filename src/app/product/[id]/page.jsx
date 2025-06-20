@@ -17,10 +17,28 @@ const ProductPage = ({ params }) => {
   const qtyRef = useRef(null);
   const router = useRouter();
 
-
-
   // Access product ID from URL
   const { id } = useParams(params);
+
+  useEffect(() => {
+      const fetchProducts = async () => {
+        try {
+           const res = await axios.post("/api/product-fatch-by-collection-id", {collectionId: parseInt(id),});
+          //  console.log(res.data.products)
+           //const data = await res.json();
+          console.log('Fetched data:', res.data.products);  
+          setProducts(res.data.products || []);  
+          setAllProducts(res.data.products || []);
+        } catch (err) {
+          console.error('Error fetching products:', err);
+        } finally {
+          setLoading(false);
+        }
+      };
+    
+      fetchProducts();
+    }, []);
+
 
   const product = allProducts.find((product) => product._id === id);
   console.log(allProducts)
