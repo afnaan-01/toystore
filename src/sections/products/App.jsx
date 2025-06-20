@@ -1,9 +1,13 @@
 "use client"
 
 import Card from "@/components/card/App";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import useAllProducts from "@/allContext/allproducts";
 
-const App = ({ text }) => {
+const App = ({ text, id }) => {
+
+  const {allProducts} = useAllProducts();
+  const [products, setProducts] = useState([]);
 
   const colorNames = [
    "slate", "gray", "zinc", "neutral", "stone",
@@ -20,29 +24,12 @@ const App = ({ text }) => {
     const colorIndex = Math.floor(Math.random() * colorNames.length);
     setBgColor(colorNames[colorIndex]);
 
-  }, [])
+  }, []);
 
-
-  const products = [
-    {
-      id: "1",
-      title: "Remote Control Car",
-      imageUrl: "https://i.pinimg.com/736x/f6/1d/29/f61d29179830a773708020086ebd5cb3.jpg",
-      price: 1299,
-    },
-    {
-      id: "2",
-      title: "Educational Robot Kit",
-      imageUrl: "https://i.pinimg.com/736x/50/7c/10/507c10ff21bc4e50a73424b58d3bc223.jpg",
-      price: 2499,
-    },
-    {
-      id: "3",
-      title: "Action Hero Set",
-      imageUrl: "https://i.pinimg.com/736x/c5/2d/3f/c52d3f471c3ced1cc67be55a859a28bb.jpg",
-      price: 899,
-    },
-  ];
+  useEffect(()=>{
+       const data = allProducts.filter((product) => product.collectionId === id);
+       setProducts(data);
+  },[allProducts]);
 
   return (
     <div className={`bg-${bgColor}-50`}>
@@ -54,11 +41,11 @@ const App = ({ text }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {products.map((product) => (
             <Card
-              key={product.id}
-              id={product.id}
-              title={product.title}
-              imageUrl={product.imageUrl}
-              price={product.price}
+              key={product._id}
+              id={product._id}
+              title={product.productName}
+              imageUrl={product.images[0]}
+              price={product.finalPrice}
             />
           ))}
         </div>

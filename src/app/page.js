@@ -16,16 +16,16 @@ export default function Home() {
         <Banner imageUrl={"/images/banner.jpg"} />
 
         <Collection />
-        <Products text={"Popular Toys"} />
+        <Products text={"Popular Toys"} id={4} />
 
         <Banner imageUrl={"https://i.pinimg.com/736x/58/2a/cd/582acdd89636b709a78c27a2d6440700.jpg"} />
-        <Products text={"Best Selling Puzzles"} />
+        <Products text={"Best Selling Puzzles"} id={2} />
 
         <Banner imageUrl={"https://i.pinimg.com/736x/7a/c5/5b/7ac55b1082aef62f34f793b024273008.jpg"} />
-        <Products text={"Best Selling Cars"} />
+        <Products text={"Best Selling Cars"} id={3} />
 
         <Banner imageUrl={"https://i.pinimg.com/736x/15/50/97/155097f5c076620b76d28f964052aac6.jpg"} />
-        <Products text={"Best Selling Action Heroes"} />
+        <Products text={"Best Selling Action Heroes"} id={1} />
 
         <Footer />
       </div>
