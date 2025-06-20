@@ -60,6 +60,6 @@ import { LogOutIcon } from "lucide-react";
       )}
     </header>
   );
-};
+
 
 export default Navbar;
