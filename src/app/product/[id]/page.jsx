@@ -22,10 +22,10 @@ const ProductPage = ({ params }) => {
   // Access product ID from URL
   const { id } = useParams(params);
 
-  const products = allProducts.find((product) => product._id === id);
+  const product = allProducts.find((product) => product._id === id);
   console.log(allProducts)
 
-  if (!products) {
+  if (!product) {
     return <div>...Loading</div>
   }
 
@@ -42,8 +42,8 @@ const ProductPage = ({ params }) => {
 
             <div className="w-full overflow-scroll flex scroll-smooth snap-x snap-mandatory">
               {
-                products.images.map((image, ind) => {
-                  return <img key={ind} src={image} alt={products.productName} className="w-full h-auto rounded-lg object-cover mb-4 snap-center" />
+                product.images.map((image, ind) => {
+                  return <img key={ind} src={image} alt={product.productName} className="w-full h-auto rounded-lg object-cover mb-4 snap-center" />
                 })
               }
             </div>
@@ -68,16 +68,16 @@ const ProductPage = ({ params }) => {
 
             <div>
               <h1 className="text-xl sm:text-3xl font-bold text-gray-800">
-                {products.productName}
+                {product.productName}
               </h1>
             </div>
 
             {/* Product Pricing */}
             <div className="flex gap-1 items-center">
-              <p className="text-blue-600 font-bold text-3xl">{products.price}</p>
+              <p className="text-blue-600 font-bold text-3xl">{product.price}</p>
               <div className="flex gap-1">
                 <p>M.R.P:</p>
-                <p className="text-gray-600 line-through">{products.finalPrice}</p>
+                <p className="text-gray-600 line-through">{product.finalPrice}</p>
               </div>
             </div>
 
@@ -101,7 +101,7 @@ const ProductPage = ({ params }) => {
               <Button variant={"addcart"}>
                 Add to cart
               </Button>
-              <Button variant={"buynow"} onClick={() => router.push(`/checkout/${products.id}/${qtyRef.current.value}`)}>
+              <Button variant={"buynow"} onClick={() => router.push(`/checkout/${product.id}/${qtyRef.current.value}`)}>
                 Buy Now
               </Button>
             </div>
@@ -109,7 +109,7 @@ const ProductPage = ({ params }) => {
             <div className="mt-6 border-b border-gray-400 pb-4">
               <h2 className="text-xl">About This Product: </h2>
               <p className="mt-3 text-gray-600 text-lg sm:text-base leading-relaxed">
-                {products.description}
+                {product.description}
               </p>
             </div>
 
