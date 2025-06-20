@@ -26,7 +26,7 @@ const ProductPage = ({ params }) => {
   console.log(allProducts)
 
   if (!product) {
-    return <div>...Loading</div>
+    return <div>...Loading</div> 
   }
 
   return (
