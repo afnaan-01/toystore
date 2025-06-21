@@ -72,7 +72,7 @@ export async function POST(request) {
             return Response.json(
                 {
                     success: false,
-                    message: 'verification code is incorrect please try again',
+                    message: 'verification code is incorrect please try again with correct code',
                 },
                 { status: 400 }
             );

@@ -3,81 +3,81 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { signIn } from "next-auth/react"; // Ensure you have next-auth installed
-
+import { signIn } from "next-auth/react";
 
 const App = () => {
   const [authMode, setAuthMode] = useState("login"); // 'login' or 'signup'
   const { register, handleSubmit, reset } = useForm();
   const [otpSend, setOtpSend] = useState(false);
+  const [formAction, setFormAction] = useState("login"); // Tracks which button is clicked
 
-
-
-  // Login handler
   const handleLogin = async (data) => {
-    const result = await signIn('credentials', {
+    const result = await signIn("credentials", {
       redirect: false,
       email: data.email,
-      password: data.password
-    })
-    console.log(result)
+      password: data.password,
+    });
+    console.log(result);
     if (result?.error) {
-      toast.error(result?.error)
-    }
-    else {
-      toast.success("Login sucessful")
+      toast.error(result?.error);
+    } else {
+      toast.success("Login successful");
     }
   };
 
-  // Signup handler
   const handleSignup = async (data) => {
-    if (data.password != data.confirmPassword) {
-      toast.error("Confirm Password is not same please try again")
-    }
-    else {
+    if (data.password !== data.confirmPassword) {
+      toast.error("Confirm Password is not same, please try again");
+    } else {
       try {
-        const response = await axios.post('/api/sign-up', data);
-
+        const response = await axios.post("/api/sign-up", data);
         if (response.status === 201) {
           toast.success(response.data.message);
-          //router.replace('/');
-          setOtpSend(true); // Set otpSend to true after successful signup
+          setOtpSend(true); // Show OTP input
         } else {
           toast.success(response.data.message);
         }
-
       } catch (error) {
+        toast.error(error.response?.data?.message);
+       } 
+       //finally {
+      //   reset();
+      // }
+    }
+  };
 
-        toast.error(error.response.data.message)
+  const handleVerifyOtp = async (data) => {
+    try {
+      console.log(data)
+      const response = await axios.post("/api/otp-verification", data);
+      if (response.status === 200) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message || "Error verifying OTP");
       }
-      finally {
-        reset();
-      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    } 
+    // finally {
+    //   reset();
+    // }
+  };
+
+  const handleGoogleLogin = async () => {
+    const result = await signIn("google", { redirect: false });
+    if (result?.error) {
+      toast.error(result.error);
     }
   };
 
   const onSubmit = (data) => {
-    if (authMode === "login") {
+    if (formAction === "login") {
       handleLogin(data);
-    } else {
+    } else if (formAction === "signup") {
       handleSignup(data);
+    } else if (formAction === "verifyOtp") {
+      handleVerifyOtp(data);
     }
-
-  };
-
-  const handleVerifyOtp = async (data) => {
-
-  }
-
-  //login with google
-
-  const handleGoogleLogin = async () => {
-    const result = await signIn("google", { redirect: false });
-
-    if (result?.error) {
-      toast.error(result.error);
-    }
-
   };
 
   return (
@@ -86,14 +86,21 @@ const App = () => {
         {/* Toggle Tabs */}
         <div className="flex justify-center mb-6 space-x-4">
           <button
-            className={`text-sm font-semibold cursor-pointer ${authMode === "login" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+            className={`text-sm font-semibold cursor-pointer ${authMode === "login"
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-500"
               }`}
-            onClick={() => setAuthMode("login")}
+            onClick={() => {
+              setAuthMode("login");
+              setOtpSend(false);
+            }}
           >
             Login
           </button>
           <button
-            className={`text-sm font-semibold cursor-pointer ${authMode === "signup" ? "text-blue-600 border-b-2 border-blue-600" : "text-gray-500"
+            className={`text-sm font-semibold cursor-pointer ${authMode === "signup"
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-500"
               }`}
             onClick={() => setAuthMode("signup")}
           >
@@ -132,7 +139,9 @@ const App = () => {
             <input
               type="password"
               placeholder="Confirm Password"
-              {...register("confirmPassword", { required: authMode === "signup" })}
+              {...register("confirmPassword", {
+                required: authMode === "signup",
+              })}
               className="w-full border rounded px-4 py-2 text-sm"
               required
             />
@@ -142,8 +151,8 @@ const App = () => {
             <input
               type="text"
               placeholder="Enter OTP"
-              {...register("otp", { required: otpSend })}
-              className="w-full border rounded px-4 py-2 text-sm borded"
+              {...register("verificationCode", { required: otpSend })}
+              className="w-full border rounded px-4 py-2 text-sm"
               required
             />
           )}
@@ -160,22 +169,25 @@ const App = () => {
             </div>
           )}
 
+          {/* Submit button for Login or Signup */}
           <button
             type="submit"
+            onClick={() => setFormAction(authMode)}
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-all text-sm cursor-pointer"
-            onSubmit={authMode === "login" ? handleLogin : handleSignup}
           >
             {authMode === "login" ? "Login" : "Create Account"}
           </button>
 
-          {otpSend && <button
-            type="button"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-all text-sm cursor-pointer"
-            onClick={handleVerifyOtp}
-          >
-            Verify OTP
-          </button>
-          }
+          {/* OTP verification button */}
+          {authMode === "signup" && otpSend && (
+            <button
+              type="submit"
+              onClick={() => setFormAction("verifyOtp")}
+              className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition-all text-sm cursor-pointer"
+            >
+              Verify OTP
+            </button>
+          )}
         </form>
 
         {/* OR divider */}
@@ -185,14 +197,16 @@ const App = () => {
           <hr className="flex-grow border-t" />
         </div>
 
-        {/* Social login (optional) */}
-        <button onClick={handleGoogleLogin}>
+        {/* Social login */}
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full border text-sm text-gray-700 py-2 rounded hover:bg-gray-100 transition-all"
+        >
           Continue with Google
         </button>
       </div>
     </section>
   );
-}
-
+};
 
 export default App;

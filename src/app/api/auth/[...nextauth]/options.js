@@ -27,9 +27,13 @@ export const authOptions = {
                  if(!user){
                     throw new Error("no user found with email")
                  }
-                  if(!user.isVerified){
+                 else if(user.credential === 'google'){
+                   throw new Error("This email is already register with Google")
+                 }
+                 else if(!user.isVerified){
                     throw new Error("please verify your account for that sign up again")
                  }
+                
                  const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
                 
                  if(isPasswordCorrect){
