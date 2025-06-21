@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react"; // Ensure you have next-auth installed
- 
+
 
 const App = () => {
   const [authMode, setAuthMode] = useState("login"); // 'login' or 'signup'
@@ -13,49 +13,49 @@ const App = () => {
 
 
 
-   // Login handler
+  // Login handler
   const handleLogin = async (data) => {
-     const result = await signIn('credentials',{
+    const result = await signIn('credentials', {
       redirect: false,
       email: data.email,
       password: data.password
-     }) 
-   console.log(result)
-   if(result?.error){
-    toast.error(result?.error)
-   }
-   else{
-     toast.success("Login sucessful")
-   }
+    })
+    console.log(result)
+    if (result?.error) {
+      toast.error(result?.error)
+    }
+    else {
+      toast.success("Login sucessful")
+    }
   };
 
   // Signup handler
   const handleSignup = async (data) => {
-    if(data.password != data.confirmPassword){
-       toast.error("Confirm Password is not same please try again")
+    if (data.password != data.confirmPassword) {
+      toast.error("Confirm Password is not same please try again")
     }
-    else{
+    else {
       try {
-      const response = await axios.post('/api/sign-up', data);
-      
-      if (response.status === 201) {
-        toast.success(response.data.message);
-        //router.replace('/');
-        setOtpSend(true); // Set otpSend to true after successful signup
-      } else {
-        toast.success(response.data.message);
-      }
+        const response = await axios.post('/api/sign-up', data);
 
-    } catch (error) {
-     
-         toast.error(error.response.data.message)
-    }
-    finally{
+        if (response.status === 201) {
+          toast.success(response.data.message);
+          //router.replace('/');
+          setOtpSend(true); // Set otpSend to true after successful signup
+        } else {
+          toast.success(response.data.message);
+        }
+
+      } catch (error) {
+
+        toast.error(error.response.data.message)
+      }
+      finally {
         reset();
+      }
     }
-  }
-};
-   
+  };
+
   const onSubmit = (data) => {
     if (authMode === "login") {
       handleLogin(data);
@@ -65,15 +65,19 @@ const App = () => {
 
   };
 
+  const handleVerifyOtp = async (data) => {
+
+  }
+
   //login with google
 
   const handleGoogleLogin = async () => {
-   const result = await signIn("google", { redirect: false });
+    const result = await signIn("google", { redirect: false });
 
-if (result?.error) {
-  toast.error(result.error); 
-}
-      
+    if (result?.error) {
+      toast.error(result.error);
+    }
+
   };
 
   return (
@@ -98,12 +102,12 @@ if (result?.error) {
         </div>
 
         {/* Form */}
-        <form className="space-y-4"  onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {authMode === "signup" && (
             <input
               type="text"
               placeholder="Full Name"
-               {...register("name", { required: authMode === "signup" })}
+              {...register("name", { required: authMode === "signup" })}
               className="w-full border rounded px-4 py-2 text-sm"
               required
             />
@@ -138,11 +142,11 @@ if (result?.error) {
             <input
               type="text"
               placeholder="Enter OTP"
-              {...register("otp", {required: otpSend })}
+              {...register("otp", { required: otpSend })}
               className="w-full border rounded px-4 py-2 text-sm borded hidden"
               required
             />
-           )}
+          )}
 
           {authMode === "login" && (
             <div className="flex flex-col items-center md:flex-row md:items-center md:justify-between text-sm text-gray-600">
@@ -163,6 +167,15 @@ if (result?.error) {
           >
             {authMode === "login" ? "Login" : "Create Account"}
           </button>
+
+          {otpSend && <button
+            type="button"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-all text-sm cursor-pointer"
+            onClick={handleVerifyOtp}
+          >
+            Verify OTP
+          </button>
+          }
         </form>
 
         {/* OR divider */}
@@ -173,8 +186,8 @@ if (result?.error) {
         </div>
 
         {/* Social login (optional) */}
-         <button onClick={handleGoogleLogin}>
-          Continue with Google 
+        <button onClick={handleGoogleLogin}>
+          Continue with Google
         </button>
       </div>
     </section>
