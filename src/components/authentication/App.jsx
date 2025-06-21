@@ -9,7 +9,7 @@ import { signIn } from "next-auth/react"; // Ensure you have next-auth installed
 const App = () => {
   const [authMode, setAuthMode] = useState("login"); // 'login' or 'signup'
   const { register, handleSubmit, reset } = useForm();
-  const [otpSend, setOtpSend] = useState(true);
+  const [otpSend, setOtpSend] = useState(false);
 
 
 
@@ -41,6 +41,7 @@ const App = () => {
       if (response.status === 201) {
         toast.success(response.data.message);
         //router.replace('/');
+        setOtpSend(true); // Set otpSend to true after successful signup
       } else {
         toast.success(response.data.message);
       }
@@ -137,8 +138,8 @@ if (result?.error) {
             <input
               type="text"
               placeholder="Enter OTP"
-              {...register("otp", {required: authMode === "signup" })}
-              className="w-full border rounded px-4 py-2 text-sm borded"
+              {...register("otp", {required: otpSend })}
+              className="w-full border rounded px-4 py-2 text-sm borded hidden"
               required
             />
            )}
