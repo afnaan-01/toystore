@@ -5,10 +5,10 @@ import { NextResponse } from "next/server";
 export async function GET(request, { params }) {
   await dbConnect();
 
-  const { _id } = params;
+  const { id } = params;
 
   try {
-    const product = await productModel.findById(_id);
+    const product = await productModel.findById(id);
 
     if (!product) {
       return NextResponse.json({

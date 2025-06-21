@@ -26,7 +26,6 @@ export default function CollectionPage({params}) {
          //const data = await res.json();
         console.log('Fetched data:', res.data.products);  
         setProducts(res.data.products || []);  
-        setAllProducts(res.data.products || []);
       } catch (err) {
         console.error('Error fetching products:', err);
       } finally {

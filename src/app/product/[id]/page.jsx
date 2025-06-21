@@ -24,15 +24,15 @@ const ProductPage = ({ params }) => {
   useEffect(() => {
       const fetchProducts = async () => {
         try {
-           const res = await axios.post("/api/fatch-single-product", {_id: parseInt(id),});
+           console.log(id);
+           const res = await axios.get(`/api/products?id=${id}`);
           //  console.log(res.data.products)
            //const data = await res.json();
-          console.log('Fetched data:', res.data.products);  
+          console.log('Fetched data:', res.data.product);  
           // setProducts(res.data.products || []);  
           // setAllProducts(res.data.products || []);
         } catch (err) {
           console.error('Error fetching products:', err);
-          console.log("Error Here");
         } finally {
           // setLoading(false);
         }
