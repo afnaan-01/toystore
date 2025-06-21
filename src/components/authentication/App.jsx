@@ -143,7 +143,7 @@ const App = () => {
               type="text"
               placeholder="Enter OTP"
               {...register("otp", { required: otpSend })}
-              className="w-full border rounded px-4 py-2 text-sm borded hidden"
+              className="w-full border rounded px-4 py-2 text-sm borded"
               required
             />
           )}
