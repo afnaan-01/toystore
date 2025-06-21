@@ -21,7 +21,7 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         buynow:
-          "bg-orange-500 w-full text-primary-foreground shadow-xs hover:bg-orange-500/95 cursor-pointer",
+          "bg-orange-500 w-full text-primary-foreground shadow-xs hover:bg-orange-500/95 cursor-pointer rounded-3xl",
         addcart:
           "my-2 w-full border py-2 rounded hover:bg-gray-100 cursor-pointer transition-all text-sm"
       },

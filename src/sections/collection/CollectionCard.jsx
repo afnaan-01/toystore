@@ -7,7 +7,8 @@ const CollectionCard = ({ title, imageUrl, id }) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-300 group">
       <Link href={`/collection/${id}`}>
-        <div className="relative w-full h-48 sm:h-60 md:h-72">
+        <div className="relative w-full aspect-square">
+          {/* h-48 sm:h-60 md:h-72 */}
           <img
             src={imageUrl}
             alt={title}

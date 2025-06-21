@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Banner = ({imageUrl}) => {
   return (
-    <section className="bg-gradient-to-br from-blue-100 to-pink-100 h-full">
+    <section className="bg-gradient-to-br from-blue-100 to-pink-100 aspect-video">
      <img
       src={imageUrl}
       alt="Banner Image"
