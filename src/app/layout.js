@@ -3,6 +3,7 @@ import "./globals.css";
 import { CartProvider } from "@/allContext/cart";
 import { AllProductsProvider } from "@/allContext/allproducts";
 import { Toaster } from "sonner";
+import AuthProvider from "@/components/AuthProvider/page";
 
 
 const geistSans = Geist({
@@ -29,12 +30,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased baloo-2-all h-full`}
       >
+        <AuthProvider>
         <AllProductsProvider>
           <CartProvider>
             {children}
             <Toaster position="top-center" richColors />
           </CartProvider>
         </AllProductsProvider>
+        </AuthProvider>
       </body>
     </html>
   );

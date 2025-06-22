@@ -41,9 +41,9 @@ const App = () => {
       } catch (error) {
         toast.error(error.response?.data?.message);
        } 
-       //finally {
-      //   reset();
-      // }
+       finally {
+        reset();
+      }
     }
   };
 
@@ -59,9 +59,9 @@ const App = () => {
     } catch (error) {
       toast.error(error?.response?.data?.message);
     } 
-    // finally {
-    //   reset();
-    // }
+    finally {
+      reset();
+    }
   };
 
   const handleGoogleLogin = async () => {
