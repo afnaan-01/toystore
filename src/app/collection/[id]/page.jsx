@@ -7,12 +7,8 @@ import { collections } from "@/helper/data";
 import Navbar from "@/components/navbar/App";
 import Footer from "@/components/footer/App";
 import axios from "axios";
-import useAllProducts from "@/allContext/allproducts";
 
 export default function CollectionPage({params}) {
-
-  const { allProducts, setAllProducts } = useAllProducts();
-  
 
  const [products, setProducts] = useState([]);
  const [loading, setLoading] = useState(true);
@@ -22,8 +18,6 @@ export default function CollectionPage({params}) {
     const fetchProducts = async () => {
       try {
          const res = await axios.post("/api/product-fatch-by-collection-id", {collectionId: parseInt(id),});
-        //  console.log(res.data.products)
-         //const data = await res.json();
         console.log('Fetched data:', res.data.products);  
         setProducts(res.data.products || []);  
       } catch (err) {
@@ -35,8 +29,6 @@ export default function CollectionPage({params}) {
   
     fetchProducts();
   }, []);
-  console.log(products)
-  // const filteredProducts = allProducts.filter((product) => product.collectionId === parseInt(id));
   const collection = collections.find((collection) => collection.id === parseInt(id));
   const [sortOption, setSortOption] = useState("default");
 
