@@ -23,6 +23,7 @@ export const authOptions = {
                await dbConnect()
 
                try {
+                console.log("working one")
                  const user = await UserModel.findOne({email: credentials.email})
                  if(!user){
                     throw new Error("no user found with email")
@@ -30,20 +31,23 @@ export const authOptions = {
                  else if(user.credential === 'google'){
                    throw new Error("This email is already register with Google")
                  }
-                 else if(!user.isVerified){
+                   if(!user.isVerified){
                     throw new Error("please verify your account for that sign up again")
                  }
                 
                  const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
                 
                  if(isPasswordCorrect){
+    
                     return user
+                       
                  }
                  else{
+                
                      throw new Error("Incorrect Password")
                  }
                } catch (error) {
-                  throw new Error(error)
+                throw new Error(error?.message || "Something went wrong");
                }
             }
         }),
@@ -54,40 +58,48 @@ export const authOptions = {
         })
       ],
      callbacks: {
-      async signIn({ account, profile}) {
-        
-       if(account.provider === "google"){
-        await dbConnect();
-         try {
-        let user = await UserModel.findOne({ email: profile?.email });
+     async signIn({ account, profile, user }) {
+  console.log("SignIn callback:", account.provider);
 
-        if (!user) {
-          user = await UserModel.create({
-            name: profile.name,
-            email: profile.email,
-            isVerified: true,
-            credential: "google"
-          });
-        }
+  if (account.provider === "google") {
+    await dbConnect();
+    try {
+      let user = await UserModel.findOne({ email: profile?.email });
 
-        if (user.credential === "emailPassword") {
-        
-          // Option 2: throw custom error
-           return '/unexpected'
-          }
-
-        return true;
-      } catch (error) {
-        console.error("Google sign-in error:", error);
-        return false;
+      if (!user) {
+        user = await UserModel.create({
+          name: profile.name,
+          email: profile.email,
+          isVerified: true,
+          credential: "google",
+        });
       }
-       } 
-      },
+
+      if (user.credential === "emailPassword") {
+        return '/unexpected';
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      return false;
+    }
+  }
+
+   
+  if (account.provider === "credentials") {
+    return true;
+  }
+
+  return false;  
+},
+
 
 
 
        async jwt({ token, user}) {
-          if(user){
+   
+          if(user){   
             token._id = user._id?.toString();
             token.isVerified = user.isVerified;
             token.email = user.email;

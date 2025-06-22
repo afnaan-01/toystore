@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 export default function UserProfilePage() {
   const [activeTab, setActiveTab] = useState("profile");
+   const [session, setSession] = useState(false);
 
   const user = {
     name: "Amaan Toywala",

@@ -12,6 +12,7 @@ const App = () => {
   const [formAction, setFormAction] = useState("login"); // Tracks which button is clicked
 
   const handleLogin = async (data) => {
+    
     const result = await signIn("credentials", {
       redirect: false,
       email: data.email,
