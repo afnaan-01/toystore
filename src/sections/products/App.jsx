@@ -45,7 +45,8 @@ const App = ({ text, id }) => {
               id={product._id}
               title={product.productName}
               imageUrl={product.images[0]}
-              price={product.finalPrice}
+              price={product.price}
+              finalPrice={product.finalPrice}
             />
           ))}
         </div>
