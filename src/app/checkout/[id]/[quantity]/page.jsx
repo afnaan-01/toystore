@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
+import { useParams } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 export default function CheckoutPage() {
+
+  console.log("ok");
+  
   const [form, setForm] = useState({
     name: "",
     email: "",
