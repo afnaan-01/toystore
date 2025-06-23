@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import useCart from "@/allContext/cart";
 
-const App = ({ id, title, imageUrl, price }) => {
+const App = ({ id, title, imageUrl, price, finalPrice }) => {
 
     const { addToCart, cartItems } = useCart();
 
@@ -27,10 +27,10 @@ const App = ({ id, title, imageUrl, price }) => {
             <div className="p-4">
                 <h3 className="text-md font-semibold text-gray-800 truncate">{title}</h3>
                 <div className="flex gap-1 items-center">
-                    <p className="text-blue-600 font-bold text-2xl">₹{price}</p>
+                    <p className="text-blue-600 font-bold text-2xl">₹{finalPrice}</p>
                     <div className="flex gap-1">
                         <p>M.R.P: </p>
-                        <p className="text-gray-600 line-through">₹3000</p>
+                        <p className="text-gray-600 line-through">₹{price}</p>
                     </div>
                 </div>
                 <Button variant={"addcart"} onClick={() => {

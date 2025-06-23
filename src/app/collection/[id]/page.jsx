@@ -81,6 +81,7 @@ export default function CollectionPage({params}) {
                 title={product.title}
                 imageUrl={product.images[0]}
                 price={product.price}
+                finalPrice={product.finalPrice}
               />
             ))}
           </div>
