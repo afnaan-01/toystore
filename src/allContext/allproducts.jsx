@@ -15,9 +15,8 @@ const AllProductsProvider = ({children}) =>{
         const fetchProducts = async () => {
           try {
              const res = await axios.get("/api/fatch-all-products");
-            console.log('Fetched data:', res.data.products);  
+            // console.log('Fetched data:', res.data.products);  
             setAllProducts(res.data.products || []);  
-            // setAllProducts(res.data.products || []);
           } catch (err) {
             console.error('Error fetching products:', err);
           } finally {

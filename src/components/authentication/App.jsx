@@ -11,6 +11,8 @@ const App = () => {
   const [otpSend, setOtpSend] = useState(false);
   const [formAction, setFormAction] = useState("login"); // Tracks which button is clicked
 
+  console.log("ok");
+
   const handleLogin = async (data) => {
 
     const result = await signIn("credentials", {
