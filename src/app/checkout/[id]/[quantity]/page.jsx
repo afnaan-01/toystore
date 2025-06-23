@@ -2,14 +2,22 @@
 
 import { useState, useEffect, use } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
-export default function CheckoutPage({ params }) {
+export default function CheckoutPage() {
 
-  const { id, quantity } = use(params);
+  console.log("ok");
+  
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    address: "",
+    city: "",
+    zip: "",
+    phone: "",
+    payment: "cod",
+    coupon: "",
+  });
 
-  const { register, handleSubmit, reset } = useForm();
-  const [orderProduct, setOrderProduct] = useState();
   const [placingOrder, setPlacingOrder] = useState(false);
 
 

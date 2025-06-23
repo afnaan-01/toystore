@@ -1,36 +1,93 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "sonner";
 
 export default function UserProfilePage() {
   const [activeTab, setActiveTab] = useState("profile");
-   const [session, setSession] = useState(false);
+  const { data: session, status } = useSession();
+  const [isAddressDialoagOpen, setIsAddressDialoagOpen] = useState(false);
+  const { register, handleSubmit, reset } = useForm();
+  const [user, setUser] = useState([])
 
-  const user = {
-    name: "Amaan Toywala",
-    email: "amaan@toys.com",
-    avatar: "/avatar.jpg", // make sure this exists in /public
-    phone: "9876543210",
-    address: "12 Toy Lane, Mumbai",
+  useEffect(() => {
+  const fetchData = async () => {
+    if (session) {
+      try {
+        
+        const response = await axios.post("/api/fatch-user", { userId: session._id });
+        if (response.status === 200) {
+          setUser(response.data.user)
+        }  
+      } catch (error) {
+         console.log(error)
+      }
+    }
+  };
+
+  fetchData(); // Call the inner async function
+}, [session]);
+
+console.log(user)
+
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="animate-spin w-15 h-15 text-gray-600" />
+      </div>
+    );
+  }
+  if (!session) {
+    return (
+      <a
+        href="/api/auth/signin"
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Sign In
+      </a>
+    );
+  }
+
+
+  const onSubmit = async (data) => {
+    console.log("New Address:", data);
+    try {
+      const response = await axios.post("/api/add-address", data);
+      if (response.status === 200) {
+        toast.success(response?.data?.message || "address added successfuly");
+      } else {
+        toast.success(response?.data?.message || "Error while Adding Address");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+    finally {
+      reset();
+      setIsAddressDialoagOpen(false);
+    }
   };
 
   return (
     <section className="min-h-screen px-4 py-10 max-w-5xl mx-auto">
       {/* User Info */}
+
       <div className="flex flex-col sm:flex-row items-center sm:justify-between mb-8 gap-4">
         <div className="flex items-center gap-4">
           <img
-            src={user.avatar}
+          src="/images/avatar.png"
             alt="avatar"
             className="w-16 h-16 rounded-full border object-cover"
           />
           <div>
-            <h2 className="text-xl font-semibold text-gray-800">{user.name}</h2>
-            <p className="text-gray-500 text-sm">{user.email}</p>
+            <h2 className="text-xl font-semibold text-gray-800">{session?.user?.name}</h2>
+            <p className="text-gray-500 text-sm">{session?.user?.email}</p>
           </div>
         </div>
-        <button className="text-sm bg-red-100 text-red-600 px-4 py-2 rounded hover:bg-red-200">
+        <button onClick={signOut} className="text-sm bg-red-100 text-red-600 px-4 py-2 rounded hover:bg-red-200">
           Logout
         </button>
       </div>
@@ -40,11 +97,10 @@ export default function UserProfilePage() {
         {["profile", "orders", "address", "favourites"].map((tab) => (
           <button
             key={tab}
-            className={`px-4 py-2 ${
-              activeTab === tab
+            className={`px-4 py-2 ${activeTab === tab
                 ? "border-b-2 border-blue-600 text-blue-600 font-medium"
                 : "text-gray-500"
-            }`}
+              }`}
             onClick={() => setActiveTab(tab)}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -57,9 +113,9 @@ export default function UserProfilePage() {
         <div className="space-y-4">
           <div className="bg-white rounded p-4 shadow">
             <h3 className="font-semibold text-gray-700 mb-2">Basic Info</h3>
-            <p><strong>Name:</strong> {user.name}</p>
-            <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>Phone:</strong> {user.phone}</p>
+            <p><strong>Name:</strong> {session?.user?.name}</p>
+            <p><strong>Email:</strong> {session?.user?.email}</p>
+            {/* <p><strong>Phone:</strong> {user.phone}</p> */}
           </div>
         </div>
       )}
@@ -72,11 +128,99 @@ export default function UserProfilePage() {
       )}
 
       {activeTab === "address" && (
-        <div className="bg-white rounded p-4 shadow">
-          <h3 className="font-semibold text-gray-700 mb-2">Saved Address</h3>
-          <p>{user.address}</p>
+        <div className="flex flex-col gap-3 items-center">
+          <div className="bg-white rounded p-4 shadow w-full">
+            <h3 className="font-semibold text-gray-700 mb-2">Saved Address</h3>
+            <p>{user.address}</p>
+          </div>
+          <button
+            onClick={() => setIsAddressDialoagOpen(true)}
+            className="bg-blue-400 text-white px-4 py-2 rounded"
+          >
+            Add Address
+          </button>
         </div>
       )}
+      {/* Modal */}
+      {isAddressDialoagOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-md relative">
+            <h2 className="text-xl font-semibold mb-4">Add New Address</h2>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium">Address</label>
+                <input
+                  {...register("address", { required: true })}
+                  className="border w-full px-3 py-2 rounded"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">City</label>
+                <input
+                  {...register("city", { required: true })}
+                  className="border w-full px-3 py-2 rounded"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">State</label>
+                <input
+                  {...register("state", { required: true })}
+                  className="border w-full px-3 py-2 rounded"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">Pin Code</label>
+                <input
+                  type="number"
+                  {...register("pinCode", { required: true })}
+                  className="border w-full px-3 py-2 rounded"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">Phone Number</label>
+                <input
+                  {...register("phoneNo", { required: true })}
+                  className="border w-full px-3 py-2 rounded"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">Landmark</label>
+                <input
+                  {...register("landmark")}
+                  className="border w-full px-3 py-2 rounded"
+                />
+              </div>
+
+              <div className="flex justify-between pt-4">
+                <button
+                  type="submit"
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                >
+                  Save Address
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    reset();
+                    setIsAddressDialoagOpen(false);
+                  }}
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      )}
+
 
       {activeTab === "favourites" && (
         <div className="bg-white rounded p-4 shadow">

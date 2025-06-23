@@ -101,7 +101,7 @@ if(!emailResponse.success){
       { status: 201 }
     );
  }catch (error){
-  console.error('Error while registering user:', error);
+  console.log('Error while registering user:', error);
     return Response.json(
       {
         success: false,
