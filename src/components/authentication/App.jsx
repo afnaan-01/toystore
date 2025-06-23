@@ -11,7 +11,7 @@ const App = () => {
   const [otpSend, setOtpSend] = useState(false);
   const [formAction, setFormAction] = useState("login"); // Tracks which button is clicked
 
-  console.log("ok");
+  
 
   const handleLogin = async (data) => {
 
@@ -87,7 +87,7 @@ const App = () => {
     } else if (formAction === "verifyOtp") {
       handleVerifyOtp(data);
     }
-  
+  }
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
@@ -226,5 +226,5 @@ const App = () => {
   );
 
  };
-}
+ 
 export default App;
