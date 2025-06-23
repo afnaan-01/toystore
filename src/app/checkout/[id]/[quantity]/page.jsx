@@ -3,10 +3,11 @@
 import { use, useState } from "react";
 import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 
 export default function CheckoutPage() {
-
-  console.log("ok");
+ const {data:session} = useSession()
+ console.log(session)
   
   const [form, setForm] = useState({
     name: "",

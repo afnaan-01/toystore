@@ -56,10 +56,7 @@ console.log(user)
   const onSubmit = async (data) => {
     console.log("New Address:", data);
     try {
-      const response = await axios.post("/api/add-address", {
-        userId: session?._id,
-        ...data,
-      });
+      const response = await axios.post("/api/add-address", data);
       if (response.status === 200) {
         toast.success(response?.data?.message || "address added successfuly");
       } else {

@@ -1,13 +1,27 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
 import { NextResponse } from "next/server";
-
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/options";
 
 export async function POST(request) {
+    
     await dbConnect();
 
+  const session = await getServerSession(authOptions);
+ 
+  if (!session || !session.user) {
+    return NextResponse.json({ 
+        success: false, 
+        message: "Unauthorized" 
+    }, { status: 401 });
+  }
+
+   
+  const userId = session._id;  
+ 
     try {
-        const { userId, address, city, state, landmark, phoneNo, pinCode } = await request.json();
+        const { address, city, state, landmark, phoneNo, pinCode } = await request.json();
 
         const user = await UserModel.findById(userId)
         if (!user) {
