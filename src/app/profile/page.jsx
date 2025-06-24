@@ -141,7 +141,7 @@ console.log(user)
                       {/* <Badge variant={"default"}>Primary</Badge> */}
                       <input type="radio" checked onChange={()=>{}} />
                     </span>
-                    <div key={index} className="border p-4 rounded mb-2 w-full"> virat kohli is a good cricketer and he is the greatest batsman of all time. He 
+                    <div key={index} className="border p-4 rounded mb-2 w-full"> 
                       <p><strong>Address:</strong> {address.address}</p>
                       <p><strong>City:</strong> {address.city}</p>
                       <p><strong>State:</strong> {address.state}</p>
