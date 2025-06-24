@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ export default function UserProfilePage() {
   fetchData(); // Call the inner async function
 }, [session]);
 
-console.log(user)
+ 
 
   if (status === "loading") {
     return (
@@ -54,7 +54,7 @@ console.log(user)
 
 
   const onSubmit = async (data) => {
-    console.log("New Address:", data);
+   
     try {
       const response = await axios.post("/api/add-address", data);
       if (response.status === 200) {
@@ -131,7 +131,21 @@ console.log(user)
         <div className="flex flex-col gap-3 items-center">
           <div className="bg-white rounded p-4 shadow w-full">
             <h3 className="font-semibold text-gray-700 mb-2">Saved Address</h3>
-            <p>{user.address}</p>
+            {
+              user.addresses.map((address, index)=>{
+                return (
+                  <div key={index} className="border p-4 rounded mb-2">
+                    <p><strong>Address:</strong> {address.address}</p>
+                    <p><strong>City:</strong> {address.city}</p>
+                    <p><strong>State:</strong> {address.state}</p>
+                    <p><strong>Pin Code:</strong> {address.pinCode}</p>
+                    <p><strong>Phone No:</strong> {address.phoneNo}</p>
+                    <p><strong>Landmark:</strong> {address.landmark}</p>
+                  </div>
+                )
+              })
+            }
+
           </div>
           <button
             onClick={() => setIsAddressDialoagOpen(true)}
