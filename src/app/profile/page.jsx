@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -33,7 +33,7 @@ export default function UserProfilePage() {
     fetchData(); // Call the inner async function
   }, [session]);
 
-  console.log("User:", user)
+console.log(user)
 
   if (status === "loading") {
     return (
@@ -55,7 +55,7 @@ export default function UserProfilePage() {
 
 
   const onSubmit = async (data) => {
-    console.log("New Address:", data);
+   
     try {
       const response = await axios.post("/api/add-address", data);
       if (response.status === 200) {
@@ -132,7 +132,7 @@ export default function UserProfilePage() {
         <div className="flex flex-col gap-3 items-center">
           <div className="bg-white rounded p-4 shadow w-full">
             <h3 className="font-semibold text-gray-700 mb-2">Saved Address</h3>
-
+            
             {
               user?.addresses?.map((address, index) => {
                 return (
@@ -154,7 +154,7 @@ export default function UserProfilePage() {
               })
             }
 
-
+           
 
           </div>
           <button
