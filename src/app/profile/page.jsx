@@ -43,12 +43,17 @@ export default function UserProfilePage() {
   }
   if (!session) {
     return (
-      <a
-        href="/api/auth/signin"
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Sign In
-      </a>
+      <div className="flex justify-center items-center h-screen">
+ <p>
+  You can't access the profile page first you need to 
+  <a
+    href="/auth"
+    className="ml-2 text-blue-600 underline"
+  >
+    Sign In
+  </a>
+  </p>
+</div>
     );
   }
 
@@ -87,7 +92,7 @@ export default function UserProfilePage() {
             <p className="text-gray-500 text-sm">{session?.user?.email}</p>
           </div>
         </div>
-        <button onClick={signOut} className="text-sm bg-red-100 text-red-600 px-4 py-2 rounded hover:bg-red-200">
+        <button onClick={() => {signOut({ callbackUrl: "/" });}} className="text-sm bg-red-100 text-red-600 px-4 py-2 rounded hover:bg-red-200">
           Logout
         </button>
       </div>

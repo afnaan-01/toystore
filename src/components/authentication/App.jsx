@@ -3,20 +3,39 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 const App = () => {
   const [authMode, setAuthMode] = useState("login"); // 'login' or 'signup'
   const { register, handleSubmit, reset } = useForm();
   const [otpSend, setOtpSend] = useState(false);
   const [formAction, setFormAction] = useState("login"); // Tracks which button is clicked
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const {data: session} = useSession();
 
-  
 
+ if (session) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+ <p>
+   you have already login 
+  <a
+    href="/profile"
+    className="ml-2 text-blue-600 underline"
+  >
+     profile
+  </a>
+  </p>
+</div>
+    );
+  }
   const handleLogin = async (data) => {
 
     const result = await signIn("credentials", {
-      redirect: false,
+      redirect: true,
+      callbackUrl: callbackUrl,
       email: data.email,
       password: data.password,
     });
