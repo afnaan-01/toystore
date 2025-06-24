@@ -6,33 +6,34 @@ import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge"
 
 export default function UserProfilePage() {
   const [activeTab, setActiveTab] = useState("profile");
   const { data: session, status } = useSession();
   const [isAddressDialoagOpen, setIsAddressDialoagOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm();
-  const [user, setUser] = useState([])
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
-  const fetchData = async () => {
-    if (session) {
-      try {
-        
-        const response = await axios.post("/api/fatch-user", { userId: session._id });
-        if (response.status === 200) {
-          setUser(response.data.user)
-        }  
-      } catch (error) {
-         console.log(error)
+    const fetchData = async () => {
+      if (session) {
+        try {
+
+          const response = await axios.post("/api/fatch-user", { userId: session._id });
+          if (response.status === 200) {
+            setUser(response.data.user);
+          }
+        } catch (error) {
+          console.log(error)
+        }
       }
-    }
-  };
+    };
 
-  fetchData(); // Call the inner async function
-}, [session]);
+    fetchData(); // Call the inner async function
+  }, [session]);
 
- 
+console.log(user)
 
   if (status === "loading") {
     return (
@@ -83,7 +84,7 @@ export default function UserProfilePage() {
       <div className="flex flex-col sm:flex-row items-center sm:justify-between mb-8 gap-4">
         <div className="flex items-center gap-4">
           <img
-          src="/images/avatar.png"
+            src="/images/avatar.png"
             alt="avatar"
             className="w-16 h-16 rounded-full border object-cover"
           />
@@ -103,8 +104,8 @@ export default function UserProfilePage() {
           <button
             key={tab}
             className={`px-4 py-2 ${activeTab === tab
-                ? "border-b-2 border-blue-600 text-blue-600 font-medium"
-                : "text-gray-500"
+              ? "border-b-2 border-blue-600 text-blue-600 font-medium"
+              : "text-gray-500"
               }`}
             onClick={() => setActiveTab(tab)}
           >
@@ -136,20 +137,29 @@ export default function UserProfilePage() {
         <div className="flex flex-col gap-3 items-center">
           <div className="bg-white rounded p-4 shadow w-full">
             <h3 className="font-semibold text-gray-700 mb-2">Saved Address</h3>
+            
             {
-              user.addresses.map((address, index)=>{
+              user?.addresses?.map((address, index) => {
                 return (
-                  <div key={index} className="border p-4 rounded mb-2">
-                    <p><strong>Address:</strong> {address.address}</p>
-                    <p><strong>City:</strong> {address.city}</p>
-                    <p><strong>State:</strong> {address.state}</p>
-                    <p><strong>Pin Code:</strong> {address.pinCode}</p>
-                    <p><strong>Phone No:</strong> {address.phoneNo}</p>
-                    <p><strong>Landmark:</strong> {address.landmark}</p>
+                  <div key={index} className="flex items-center gap-1">
+                    <span>
+                      {/* <Badge variant={"default"}>Primary</Badge> */}
+                      <input type="radio" checked onChange={()=>{}} />
+                    </span>
+                    <div key={index} className="border p-4 rounded mb-2 w-full"> 
+                      <p><strong>Address:</strong> {address.address}</p>
+                      <p><strong>City:</strong> {address.city}</p>
+                      <p><strong>State:</strong> {address.state}</p>
+                      <p><strong>Pin Code:</strong> {address.pinCode}</p>
+                      <p><strong>Phone No:</strong> {address.phoneNo}</p>
+                      <p><strong>Landmark:</strong> {address.landmark}</p>
+                    </div>
                   </div>
                 )
               })
             }
+
+           
 
           </div>
           <button
@@ -162,7 +172,7 @@ export default function UserProfilePage() {
       )}
       {/* Modal */}
       {isAddressDialoagOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 backdrop-blur-sm bg-white/30 bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-md relative">
             <h2 className="text-xl font-semibold mb-4">Add New Address</h2>
 
