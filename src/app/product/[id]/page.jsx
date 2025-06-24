@@ -113,7 +113,7 @@ const ProductPage = ({ params }) => {
                   <Button variant={"addcart"}>
                     Add to cart
                   </Button>
-                  <Button variant={"buynow"} onClick={() => router.push(`/checkout/${product.id}/${qtyRef.current.value}`)}>
+                  <Button variant={"buynow"} onClick={() => router.push(`/checkout/${id}/${qtyRef.current.value}`)}>
                     Buy Now
                   </Button>
                 </div>
