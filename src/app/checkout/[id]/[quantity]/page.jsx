@@ -19,7 +19,7 @@ export default function CheckoutPage({ params }) {
   const [isAddressDialoagOpen, setIsAddressDialoagOpen] = useState(false);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
 
-
+  //Form Management
   const {
     register,
     handleSubmit,
@@ -116,7 +116,7 @@ export default function CheckoutPage({ params }) {
   };
 
 
- //on submit if user avalible 
+  //on submit if user avalible 
   const onSubmitIfUserAvailable = async (data) => {
 
     const selectedAddress = user.addresses[selectedAddressIndex];
@@ -233,10 +233,10 @@ export default function CheckoutPage({ params }) {
                 </div>
               </div>
             </div>
-                 <div className="bg-white p-6 rounded-xl shadow h-fit">
+            <div className="bg-white p-6 rounded-xl shadow h-fit">
               <div className="mt-6">
                 <h3 className="font-semibold text-gray-700 mb-2">Payment Method</h3>
-              <input
+                <input
                   {...register("landmark")}
                   placeholder="Landmark (Optional)"
                   className="w-full border rounded p-2"
@@ -248,8 +248,8 @@ export default function CheckoutPage({ params }) {
                   className="w-full border rounded p-2"
                 />
 
-               </div>
-               </div> 
+              </div>
+            </div>
             {/* oreder summary  */}
             <div className="bg-white p-6 rounded-xl shadow h-fit">
               <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
