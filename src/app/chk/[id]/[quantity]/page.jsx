@@ -11,7 +11,7 @@ import AddressForm from "./AddressForm";
 
 export default function CheckoutPage({ params }) {
   const { id, quantity } = React.use(params);
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
   const [product, setProduct] = useState({})
   const [updatedQuantity, setUpdatedQuantity] = useState(Number(quantity) || 1);
   const [placingOrder, setPlacingOrder] = useState(false);
@@ -19,8 +19,6 @@ export default function CheckoutPage({ params }) {
   const [user, setUser] = useState({})
   const [isAddressDialoagOpen, setIsAddressDialoagOpen] = useState(false);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
-  const [adrs, setAdrs] = useState();
-
 
   //Form Management
   const {
@@ -28,6 +26,7 @@ export default function CheckoutPage({ params }) {
     handleSubmit,
     formState: { errors },
     reset,
+    watch
   } = useForm({
     defaultValues: {
       email: "",
@@ -51,6 +50,9 @@ export default function CheckoutPage({ params }) {
           if (response.status === 200) {
             setUser(response.data.user)
           }
+          else {
+            setIsAddressDialoagOpen(true);
+          }
         } catch (error) {
           console.log(error)
         }
@@ -68,7 +70,6 @@ export default function CheckoutPage({ params }) {
   const handleDecrement = () => {
     setUpdatedQuantity((prev) => (prev > 1 ? prev - 1 : 1)); // prevent going below 1
   };
-
 
   //fatching product details
   useEffect(() => {
@@ -110,9 +111,13 @@ export default function CheckoutPage({ params }) {
   console.log(user)
   //on submit if user not avalible 
   const onSubmit = async (data) => {
+    setPlacingOrder(true);
+    if (watch("paymentMethod") == "razorpay") {
+
+    }
     console.log("🛒 Order Data:", data);
 
-    const addressData = user?.addresses?.length > 0 ? user.addresses[selectedAddressIndex] : data;
+    const addressData = isAddressDialoagOpen ? data : user.addresses[selectedAddressIndex];
 
     console.log("🛒 Address Data:", addressData);
     try {
@@ -130,7 +135,9 @@ export default function CheckoutPage({ params }) {
       });
       if (response.status === 200) {
         toast.success(response?.data?.message || "address added successfuly");
-        await addAddress(data);
+        if (user || session && user?.addresses?.length < 3) {
+          await addAddress(data);
+        }
       } else {
         toast.success(response?.data?.message || "Error while Adding Address");
       }
@@ -139,10 +146,10 @@ export default function CheckoutPage({ params }) {
       toast.error(error.response?.data?.message || "Unexpected Error");
     }
     finally {
+      setPlacingOrder(false);
       reset();
     }
   };
-
 
   //on submit if user avalible 
 
@@ -189,8 +196,12 @@ export default function CheckoutPage({ params }) {
                 ))}
 
                 <button
-                  onClick={() => setIsAddressDialoagOpen(true)}
-                  className="bg-blue-400 text-white px-4 py-2 rounded"
+                  type="button"
+                  onClick={() => {
+                    setIsAddressDialoagOpen(true);
+                    console.log(isAddressDialoagOpen);
+                  }}
+                  className="bg-blue-500 cursor-pointer text-white px-4 py-2 rounded"
                 >
                   Add Address
                 </button>
@@ -202,7 +213,7 @@ export default function CheckoutPage({ params }) {
 
             {/* Shipping Details */}
 
-            {!user || !session || user?.addresses?.length == 0 && <AddressForm register={register} errors={errors} />}
+            {(isAddressDialoagOpen || !user || !session || user?.addresses?.length == 0) && (<AddressForm register={register} errors={errors} />)}
 
 
 
@@ -245,7 +256,8 @@ export default function CheckoutPage({ params }) {
                   className="w-full bg-blue-600 text-white py-3 mt-6 rounded hover:bg-blue-700 transition-all text-sm disabled:opacity-50"
                   disabled={placingOrder}
                 >
-                  {placingOrder ? "Placing Order..." : "Place Order"}
+                  {/* {placingOrder ? "Placing Order..." : "Place Order"} */}
+                  {watch("paymentMethod") == "cod" ? "Place Order" : "Pay Now"}
                 </button>
               </div>
             </div>
@@ -256,11 +268,13 @@ export default function CheckoutPage({ params }) {
                 <h3 className="font-semibold text-gray-700 mb-2">Payment Method</h3>
                 <div className="space-y-2">
                   <label className="flex items-center gap-2">
-                    <input type="radio" value="cash on delivery" {...register("paymentMethod", { required: "Select payment Method" })} checked />
+                    <input type="radio" value="cod" {...register("paymentMethod", { required: "Select payment Method" })} defaultChecked />
                     Cash on Delivery (COD)
                   </label>
                   <label className="flex items-center gap-2">
-                    <input type="radio" value="razorpay" {...register("paymentMethod", { required: "Select payment Method" })} />
+                    <input type="radio" value="razorpay"
+                      {...register("paymentMethod", { required: "Select payment Method" })}
+                    />
                     Razorpay (Online)
                   </label>
                   {errors.paymentMethod && <p className="text-red-500 text-sm">{errors.paymentMethod.message}</p>}
