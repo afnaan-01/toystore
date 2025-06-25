@@ -70,12 +70,7 @@ const AddressForm = ({register, errors}) => {
                         placeholder="Landmark (Optional)"
                         className="w-full border rounded p-2"
                     />
-                    {/* Promo Code */}
-                    <input
-                        {...register("promoCode")}
-                        placeholder="Enter Promo Code  (Optional)"
-                        className="w-full border rounded p-2"
-                    />
+                   
                 {/* </form> */}
             </div>
 

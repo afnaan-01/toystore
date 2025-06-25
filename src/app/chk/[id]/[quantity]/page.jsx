@@ -19,7 +19,7 @@ export default function CheckoutPage({ params }) {
   const [user, setUser] = useState({})
   const [isAddressDialoagOpen, setIsAddressDialoagOpen] = useState(false);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
-
+  const [adrs, setAdrs] = useState();
 
 
   //Form Management
@@ -30,14 +30,11 @@ export default function CheckoutPage({ params }) {
     reset,
   } = useForm({
     defaultValues: {
-      name: "",
       email: "",
       address: "",
       city: "",
       pinCode: "",
-      phone: "",
       payment: "cod",
-      coupon: "",
     },
   });
 
@@ -114,23 +111,22 @@ export default function CheckoutPage({ params }) {
   //on submit if user not avalible 
   const onSubmit = async (data) => {
     console.log("🛒 Order Data:", data);
-    const adr = user?.addresses?.length > 0 ? user.addresses[selectedAddressIndex] : {}
-    console.log("🛒 Address Data:", adr);
+
+    const addressData = user?.addresses?.length > 0 ? user.addresses[selectedAddressIndex] : data;
+
+    console.log("🛒 Address Data:", addressData);
     try {
       const response = await axios.post("/api/place-order", {
+        ...addressData,
+        paymentMethod: data.paymentMethod,
         productId: id,
-        quantity: updatedQuantity,
-        totalAmount: product.finalPrice,
-        fullName: user.name || data.name,
-        email: user.email || data.email,
-        address: adr?.address || data.address,
-        city: adr?.city || data.city,
-        state: adr?.state || data.state,
-        pinCode: adr?.pinCode || Number(data.piCode),
-        phoneNo: adr?.phoneNo || Number(data.phoneNo),
-        landmark: adr?.landmark || data.landmark,
-        paymentMethod: data.paymentMethod || "cod",
-        promoCode: data.promoCode || "cash",
+        quantity: quantity,
+        totalAmount: (product.finalPrice * quantity),
+        paymentId: "rzp123",
+        paymentstatus: "true",
+        productAmount: product.finalPrice,
+        shippingCharges: 0,
+        tax: 0,
       });
       if (response.status === 200) {
         toast.success(response?.data?.message || "address added successfuly");
