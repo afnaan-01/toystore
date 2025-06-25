@@ -170,6 +170,7 @@ export default function CheckoutPage({ params }) {
       setIsAddressDialoagOpen(false);
     }
   };
+  
   //on submit if user avalible
   if (loader) {
     return (

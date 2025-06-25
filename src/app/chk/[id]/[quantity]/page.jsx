@@ -92,11 +92,29 @@ export default function CheckoutPage({ params }) {
 
   }, [id]);
 
+  //add address functionality
+  const addAddress = async (data) => {
+
+    try {
+      const response = await axios.post("/api/add-address", data);
+      if (response.status === 200) {
+        toast.success(response?.data?.message || "address added for user");
+      } else {
+        toast.success(response?.data?.message || "Error while Adding Address");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+    finally {
+      reset();
+    }
+  };
+
   console.log(user)
   //on submit if user not avalible 
   const onSubmit = async (data) => {
     console.log("🛒 Order Data:", data);
-    const adr = user.addresses.length > 0 ? user.addresses[selectedAddressIndex] : {}
+    const adr = user?.addresses?.length > 0 ? user.addresses[selectedAddressIndex] : {}
     console.log("🛒 Address Data:", adr);
     try {
       const response = await axios.post("/api/place-order", {
@@ -105,17 +123,18 @@ export default function CheckoutPage({ params }) {
         totalAmount: product.finalPrice,
         fullName: user.name || data.name,
         email: user.email || data.email,
-        address: adr.address || data.address,
-        city: adr.city || data.city,
-        state: adr.state || data.state,
-        pinCode: adr.pinCode || data.piCode,
-        phoneNo: adr.phoneNo || data.phoneNo,
-        landmark: adr.landmark || data.landmark,
+        address: adr?.address || data.address,
+        city: adr?.city || data.city,
+        state: adr?.state || data.state,
+        pinCode: adr?.pinCode || Number(data.piCode),
+        phoneNo: adr?.phoneNo || Number(data.phoneNo),
+        landmark: adr?.landmark || data.landmark,
         paymentMethod: data.paymentMethod || "cod",
         promoCode: data.promoCode || "cash",
       });
       if (response.status === 200) {
         toast.success(response?.data?.message || "address added successfuly");
+        await addAddress(data);
       } else {
         toast.success(response?.data?.message || "Error while Adding Address");
       }
@@ -131,7 +150,6 @@ export default function CheckoutPage({ params }) {
 
   //on submit if user avalible 
 
-  //add address functionality
 
   //on submit if user avalible
   if (loader) {
@@ -150,7 +168,7 @@ export default function CheckoutPage({ params }) {
 
           <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            {user.addresses && (
+            {(user && user?.addresses?.length > 0) && (
               <div className="bg-white p-6 rounded-xl shadow h-fit">
                 <h3 className="font-semibold text-gray-700 mb-2">Your Addresses</h3>
                 {user?.addresses?.map((address, index) => (
@@ -188,7 +206,7 @@ export default function CheckoutPage({ params }) {
 
             {/* Shipping Details */}
 
-            {!user || !session && <AddressForm register={register} errors={errors} />}
+            {!user || !session || user?.addresses?.length == 0 && <AddressForm register={register} errors={errors} />}
 
 
 
@@ -242,7 +260,7 @@ export default function CheckoutPage({ params }) {
                 <h3 className="font-semibold text-gray-700 mb-2">Payment Method</h3>
                 <div className="space-y-2">
                   <label className="flex items-center gap-2">
-                    <input type="radio" value="cash on delivery" {...register("paymentMethod", { required: "Select payment Method" })} />
+                    <input type="radio" value="cash on delivery" {...register("paymentMethod", { required: "Select payment Method" })} checked />
                     Cash on Delivery (COD)
                   </label>
                   <label className="flex items-center gap-2">
