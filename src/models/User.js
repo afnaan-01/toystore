@@ -2,38 +2,47 @@ import { Landmark } from "lucide-react";
 import mongoose  from "mongoose";
  
 const addressSchema = new mongoose.Schema({
-   address:{
-     type: String,
-   },
-   city:{
+   fullName:{
     type: String,
+    required: [true, "full name id is required"],
    },
-   state:{
+   email:{
     type: String,
+    default: null
    },
-    country:{
-    type: String,
-    default: "India"
-   },
-
-   pinCode:{
-    type: Number,
-     
-   },
-    countryCode:{
+   countryCode:{
     type: String,
     default: "+91"
    },
    phoneNo:{
     type: Number,
-    
+    required: [true, "phoneNo is required"],
+   }, 
+   address:{
+     type: String,
+     required: [true, "address is required"],
    },
-
+   city:{
+    type: String,
+    required: [true, "city is required"],
+   },
+   state:{
+    type: String,
+    required: [true, "state is required"],
+   },
+   country:{
+    type: String,
+    default: "India"
+   },
+   pinCode:{
+    type: Number,
+    required: [true, "pinCode is required"],  
+   },
    landmark:{
     type: String,
+    default: null
    },
    
-
   })
 
 const UserSchema = new mongoose.Schema({
