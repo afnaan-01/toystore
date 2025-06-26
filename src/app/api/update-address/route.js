@@ -7,20 +7,19 @@ import { authOptions } from "../auth/[...nextauth]/options";
 
 export async function POST(request) {
      await dbConnect();
-    //  const session = await getServerSession(authOptions);
+     const session = await getServerSession(authOptions);
      
-    //   if (!session || !session.user) {
-    //     return NextResponse.json({ 
-    //         success: false, 
-    //         message: "Unauthorized" 
-    //     }, { status: 401 });
-    //   }
+      if (!session || !session.user) {
+        return NextResponse.json({ 
+            success: false, 
+            message: "Unauthorized" 
+        }, { status: 401 });
+      }
     
        
-      //const userId = session._id;  
+      const userId = session._id;  
    try {
       const {
-        userId,
         addressId, 
         address, 
         city, 
