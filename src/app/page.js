@@ -7,13 +7,15 @@ import Banner from "@/components/banner/App";
 import Collection from "@/sections/collection/App";
 import Products from "@/sections/products/App";
 import Footer from "@/components/footer/App";
+import ImageSlider from "@/components/banner/ImageSlider";
 
 export default function Home() {
   return (
     <div className="h-full">
       <div className="h-screen w-">
         <Navbar />
-        <Banner imageUrl={"/images/banner.jpg"} />
+        {/* <Banner imageUrl={"/images/banner.jpg"} /> */}
+        <ImageSlider />
 
         <Collection />
         <Products text={"Popular Toys"} id={4} />
