@@ -21,7 +21,7 @@ export async function POST(request) {
   const userId = session._id;  
  
     try {
-        const { address, city, state, landmark, phoneNo, pinCode } = await request.json();
+        const { fullName, email, address, city, state, landmark, phoneNo, pinCode } = await request.json();
 
         const user = await UserModel.findById(userId)
         if (!user) {
@@ -38,7 +38,7 @@ export async function POST(request) {
         }
           const phoneNoInt = parseInt(phoneNo);
           const pinCodeInt = parseInt(pinCode);
-        user.addresses.push({ address, city, state, pinCode: pinCodeInt, phoneNo: phoneNoInt, landmark });
+        user.addresses.push({ fullName, email, address, city, state, pinCode: pinCodeInt, phoneNo: phoneNoInt, landmark });
         await user.save();
 
         return NextResponse.json({
