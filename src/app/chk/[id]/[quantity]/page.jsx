@@ -48,14 +48,15 @@ export default function CheckoutPage({ params }) {
           const response = await axios.post("/api/fatch-user", { userId: session._id });
           console.log(response)
           if (response.status === 200) {
-            setUser(response.data.user)
-          }
-          else {
-            setIsAddressDialoagOpen(true);
+            setUser(response.data.user);
           }
         } catch (error) {
           console.log(error)
         }
+      }
+      if ((!user || !session || user?.addAddress?.length == 0)) {
+        setIsAddressDialoagOpen(true);
+        console.log(isAddressDialoagOpen);
       }
     };
 
@@ -213,7 +214,7 @@ export default function CheckoutPage({ params }) {
 
             {/* Shipping Details */}
 
-            {(isAddressDialoagOpen || !user || !session || user?.addresses?.length == 0) && (<AddressForm register={register} errors={errors} />)}
+            {(isAddressDialoagOpen) && (<AddressForm register={register} errors={errors} />)}
 
 
 
