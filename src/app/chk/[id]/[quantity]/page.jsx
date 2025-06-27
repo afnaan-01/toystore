@@ -19,6 +19,7 @@ export default function CheckoutPage({ params }) {
   const [user, setUser] = useState({})
   const [isAddressDialoagOpen, setIsAddressDialoagOpen] = useState(false);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
+  const [isUserfetched, setIsUserFetched] = useState(false);
 
   //Form Management
   const {
@@ -44,24 +45,30 @@ export default function CheckoutPage({ params }) {
     const fetchData = async () => {
       if (session) {
         try {
-
           const response = await axios.post("/api/fatch-user", { userId: session._id });
           console.log(response)
           if (response.status === 200) {
             setUser(response.data.user);
+            setIsUserFetched(true);
           }
         } catch (error) {
           console.log(error)
         }
       }
-      if ((!user || !session || user?.addAddress?.length == 0)) {
-        setIsAddressDialoagOpen(true);
-        console.log(isAddressDialoagOpen);
-      }
     };
 
     fetchData(); // Call the inner async function
   }, [session]);
+
+  //dialog box setter if user || session || address updated
+  useEffect(() => {
+    if(!isUserfetched) return;
+
+    if ((!session || !user  || user?.addresses?.length === 0)) {
+      setIsAddressDialoagOpen(true);
+      console.log(isAddressDialoagOpen)
+    }
+  }, [user, session])
 
   //quantity of product increment and decrement
   const handleIncrement = () => {
