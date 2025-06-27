@@ -142,8 +142,8 @@ export default function CheckoutPage({ params }) {
         tax: 0,
       });
       if (response.status === 200) {
-        toast.success(response?.data?.message || "address added successfuly");
-        if (user || session && user?.addresses?.length < 3) {
+        toast.success(response?.data?.message || "Order Placed successfuly");
+        if (user && user?.addresses?.length < 3 && isAddressDialoagOpen) {
           await addAddress(data);
         }
       } else {
@@ -193,6 +193,8 @@ export default function CheckoutPage({ params }) {
                       className="mr-2"
                     />
                     <div>
+                      <p><strong>Full Name:</strong> {address?.fullName || "No Name"}</p>
+                      <p><strong>Email:</strong> {address?.email || "NO Email"}</p>
                       <p><strong>Address:</strong> {address.address}</p>
                       <p><strong>City:</strong> {address.city}</p>
                       <p><strong>State:</strong> {address.state}</p>
