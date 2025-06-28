@@ -125,7 +125,7 @@ const OrderSchema = new mongoose.Schema({
 
    orderStatus: {
     type: String,
-    default: null
+    default: "processing"
    },
    isPaid: {
     type: Boolean,

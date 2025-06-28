@@ -96,7 +96,7 @@ if(!emailResponse.success){
     return Response.json(
       {
         success: true,
-        message: 'User registered successfully. Please verify your account.',
+        message: 'OTP Send successfully on your E-mail, Please verify your account.',
       },
       { status: 201 }
     );

@@ -52,7 +52,7 @@ export async function POST(request) {
             return Response.json(
                 {
                     success: true,
-                    message: 'Account verified successfully',
+                    message: 'Account verified successfully, Please Login',
                 },
                 { status: 200 }
             );

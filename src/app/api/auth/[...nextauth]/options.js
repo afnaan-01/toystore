@@ -23,22 +23,24 @@ export const authOptions = {
         await dbConnect()
 
         try {
-          console.log("working one")
+         
           const user = await UserModel.findOne({ email: credentials.email })
+        
           if (!user) {
+           console.log(user)   
             throw new Error("no user found with email")
           }
           else if (user.credential === 'google') {
             throw new Error("This email is already register with Google")
           }
-          if (!user.isVerified) {
+          if (user.isVerified === false) {
             throw new Error("please verify your account for that sign up again")
           }
-
+ 
           const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
 
           if (isPasswordCorrect) {
-
+            
             return user
 
           }
@@ -59,8 +61,8 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ account, profile, user }) {
-      console.log("SignIn callback:", account.provider);
-
+     
+ 
       if (account.provider === "google") {
         await dbConnect();
         try {
@@ -78,8 +80,9 @@ export const authOptions = {
           if (user.credential === "emailPassword") {
             return '/unexpected';
           }
-
+          
           return true;
+         
         } catch (error) {
           console.error("Google sign-in error:", error);
           return false;
@@ -112,15 +115,6 @@ export const authOptions = {
       }
       return session
     },
-    async redirect({ url, baseUrl }) {
-      console.log(url)
-      console.log(baseUrl)
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
-    }
-
-
   },
 
   pages: {
