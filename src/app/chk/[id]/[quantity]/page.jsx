@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import AddressForm from "./AddressForm";
 import useCart from "@/allContext/cart";
 import handleRazorpay from "./handleRazorpay";
+import { useRouter } from "next/navigation";
 
 
 export default function CheckoutPage({ params }) {
@@ -25,6 +26,8 @@ export default function CheckoutPage({ params }) {
   const [isAddressDialoagOpen, setIsAddressDialoagOpen] = useState(false);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(0);
   const [isUserfetched, setIsUserFetched] = useState(false);
+
+  const router = useRouter();
 
   //Form Management
   const {
@@ -165,6 +168,7 @@ export default function CheckoutPage({ params }) {
         if (user && user?.addresses?.length < 3 && isAddressDialoagOpen) {
           await addAddress(data);
         }
+        router.push("/order-done");
       } else {
         toast.success(response?.data?.message || "Error while Adding Address");
       }
