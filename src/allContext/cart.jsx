@@ -1,28 +1,41 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 
 const CartContext = createContext();
 
-const CartProvider = ({children})=>{
+const CartProvider = ({ children }) => {
 
     const [cartItems, setCartItems] = useState([]);
     const [cartPrice, setCartPrice] = useState(0);
 
-    const addToCart = (productId) =>{
+    useEffect(() => {
+
+        const localData = localStorage.getItem('cartItems');
+
+        if (localData) {
+            setCartItems(JSON.parse(localData));
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
+
+    const addToCart = (productId) => {
         const existingItem = cartItems.find(item => item.id === productId);
         if (existingItem) {
-            setCartItems(cartItems.map(item => 
-                item.id === productId ? {...item, quantity: item.quantity + 1} : item
+            setCartItems(cartItems.map(item =>
+                item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
             ));
         } else {
-            setCartItems([...cartItems, {id: productId, quantity: 1}]);
+            setCartItems([...cartItems, { id: productId, quantity: 1 }]);
         }
     }
 
-    return(
-        <CartContext.Provider value={{cartItems, setCartItems, addToCart}} >
+    return (
+        <CartContext.Provider value={{ cartItems, setCartItems, addToCart }} >
             {children}
         </CartContext.Provider>
     )

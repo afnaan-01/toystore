@@ -62,9 +62,9 @@ export default function CheckoutPage({ params }) {
 
   //dialog box setter if user || session || address updated
   useEffect(() => {
-    if(!isUserfetched) return;
+    if (!isUserfetched) return;
 
-    if ((!session || !user  || user?.addresses?.length === 0)) {
+    if ((!session || !user || user?.addresses?.length === 0)) {
       setIsAddressDialoagOpen(true);
       console.log(isAddressDialoagOpen)
     }
@@ -205,16 +205,18 @@ export default function CheckoutPage({ params }) {
                   </label>
                 ))}
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsAddressDialoagOpen(true);
-                    console.log(isAddressDialoagOpen);
-                  }}
-                  className="bg-blue-500 cursor-pointer text-white px-4 py-2 rounded"
-                >
-                  Add Address
-                </button>
+                {(user.addresses.length < 3) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAddressDialoagOpen(true);
+                      console.log(isAddressDialoagOpen);
+                    }}
+                    className="bg-blue-500 cursor-pointer text-white px-4 py-2 rounded"
+                  >
+                    Add Address
+                  </button>
+                )}
               </div>
             )}
 
