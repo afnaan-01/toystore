@@ -196,7 +196,7 @@ export default function CheckoutPage({ params }) {
         name: "Abdul Aaquib",
         email: "aquib123@gmail.com",
         contact: "9049929292"
-      },placeOrder,addressData,data);
+      }, placeOrder, addressData, data);
 
     }
     else {
@@ -278,34 +278,42 @@ export default function CheckoutPage({ params }) {
             <div className="bg-white p-6 rounded-xl shadow h-fit">
               <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
 
+              {
+                productItems?.map((product) => {
+                  return (<>
+                    <div><span>Name: </span> <span>{product.productName}</span></div>
+                    <div><span>price: </span> <span>{product.finalPrice}</span></div>
+                  </>)
+                })
+              }
 
-              <div><span>Name: </span> <span>{product.productName}</span></div>
-              <div><span>price: </span> <span>{product.price}</span></div>
-              <div> <div>Qty: </div><div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleDecrement}
-                  className="p-1 border rounded"
-                >
-                  <Minus size={16} />
-                </button>
+              <div>
+                <div>Qty: </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleDecrement}
+                    className="p-1 border rounded"
+                  >
+                    <Minus size={16} />
+                  </button>
 
-                <input
-                  type="number"
-                  value={updatedQuantity}
-                  onChange={(e) => setUpdatedQuantity(Number(e.target.value))}
-                  className="w-14 text-center border rounded"
-                  min={1}
-                />
+                  <input
+                    type="number"
+                    value={updatedQuantity}
+                    onChange={(e) => setUpdatedQuantity(Number(e.target.value))}
+                    className="w-14 text-center border rounded"
+                    min={1}
+                  />
 
-                <button
-                  type="button"
-                  onClick={handleIncrement}
-                  className="p-1 border rounded"
-                >
-                  <Plus size={16} />
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={handleIncrement}
+                    className="p-1 border rounded"
+                  >
+                    <Plus size={16} />
+                  </button>
+                </div>
 
 
                 <button
