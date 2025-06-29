@@ -7,10 +7,14 @@ import axios from "axios";
 import { Loader2, Minus, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import AddressForm from "./AddressForm";
+import useCart from "@/allContext/cart";
 
 
 export default function CheckoutPage({ params }) {
   const { id, quantity } = React.use(params);
+  const { cartItems } = useCart();
+  const [checkoutCollection, setCheckoutCollection] = useState([]);
+  const [productItems, setProductItems] = useState([{}]);
   const [loader, setLoader] = useState(false);
   const [product, setProduct] = useState({})
   const [updatedQuantity, setUpdatedQuantity] = useState(Number(quantity) || 1);
@@ -38,6 +42,18 @@ export default function CheckoutPage({ params }) {
     },
   });
 
+  useEffect(() => {
+    if (id == 'cart') {
+      console.log('cart:')
+      console.log(cartItems);
+      setCheckoutCollection(cartItems);
+    }
+    else {
+      console.log("id", id);
+      console.log("quantiy", quantity);
+      setCheckoutCollection([{ id: id, quantity: quantity }])
+    }
+  }, [cartItems])
 
 
   //get current user
@@ -81,22 +97,33 @@ export default function CheckoutPage({ params }) {
 
   //fatching product details
   useEffect(() => {
-    setLoader(true)
-    async function fetchProduct() {
+    setLoader(true);
+    async function fetchProduct(id, quantity, index) {
+      console.log(index);
       try {
         const response = await axios.get(`/api/fatch-single-product/${id}`);
         setProduct(response.data.product);
-
+        setProductItems([...productItems, { product: response.data.product, quantity: quantity }])
       } catch (error) {
         toast.error("Failed to load product");
       } finally {
-        setLoader(false);
+        if (index == checkoutCollection.length - 1) {
+          setLoader(false);
+        }
       }
     }
 
-    fetchProduct();
+    checkoutCollection.forEach((elm, index) => {
+      fetchProduct(elm.id, elm.quantity, index);
+    });
 
-  }, [id]);
+  }, [checkoutCollection]);
+
+  useEffect(() => {
+    console.log("chechoutCollection", checkoutCollection);
+    console.log("productItems", productItems);
+
+  }, [productItems]);
 
   //add address functionality
   const addAddress = async (data) => {

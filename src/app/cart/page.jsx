@@ -23,7 +23,7 @@ const App = () => {
               Product ID: {item.id}, Quantity: {item.quantity}
             </li>
           ))}
-          <Button variant={"buynow"} onClick={()=> router.push(`/checkout/cart/0`)}>Buy Now</Button>
+          <Button variant={"buynow"} onClick={()=> router.push(`/chk/cart/0`)}>Buy Now</Button>
         </ul>
       )}
     </div>
