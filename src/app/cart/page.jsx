@@ -3,9 +3,13 @@
 
 import React from 'react';
 import useCart from '@/allContext/cart';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const App = () => {
   const { cartItems } = useCart();
+
+  const router = useRouter();
 
   return (
     <div>
@@ -19,6 +23,7 @@ const App = () => {
               Product ID: {item.id}, Quantity: {item.quantity}
             </li>
           ))}
+          <Button variant={"buynow"} onClick={()=> router.push(`/checkout/cart/0`)}>Buy Now</Button>
         </ul>
       )}
     </div>
