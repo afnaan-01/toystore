@@ -8,6 +8,7 @@ import { Loader2, Minus, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import AddressForm from "./AddressForm";
 import useCart from "@/allContext/cart";
+import handleRazorpay from "./handleRazorpay";
 
 
 export default function CheckoutPage({ params }) {
@@ -143,18 +144,9 @@ export default function CheckoutPage({ params }) {
     }
   };
 
-  console.log(user)
-  //on submit if user not avalible 
-  const onSubmit = async (data) => {
+  const placeOrder = async (addressData, data, paymentInfo) => {
     setPlacingOrder(true);
-    if (watch("paymentMethod") == "razorpay") {
 
-    }
-    console.log("🛒 Order Data:", data);
-
-    const addressData = isAddressDialoagOpen ? data : user.addresses[selectedAddressIndex];
-
-    console.log("🛒 Address Data:", addressData);
     try {
       const response = await axios.post("/api/place-order", {
         ...addressData,
@@ -162,8 +154,8 @@ export default function CheckoutPage({ params }) {
         productId: id,
         quantity: quantity,
         totalAmount: (product.finalPrice * quantity),
-        paymentId: "rzp123",
-        paymentstatus: "true",
+        paymentId: paymentInfo?.paymentId || "rzp123",
+        paymentstatus: paymentInfo?.paymentStatus || "pending",
         productAmount: product.finalPrice,
         shippingCharges: 0,
         tax: 0,
@@ -183,6 +175,28 @@ export default function CheckoutPage({ params }) {
     finally {
       setPlacingOrder(false);
       reset();
+    }
+  }
+
+  console.log(user)
+  //on submit if user not avalible 
+  const onSubmit = async (data) => {
+
+    console.log("🛒 Order Data:", data);
+    const addressData = isAddressDialoagOpen ? data : user.addresses[selectedAddressIndex];
+    console.log("🛒 Address Data:", addressData);
+
+    if (watch("paymentMethod") == "razorpay") {
+      await handleRazorpay({
+        amount: 2000,
+        name: "Abdul Aaquib",
+        email: "aquib123@gmail.com",
+        contact: "9049929292"
+      },placeOrder,addressData,data);
+
+    }
+    else {
+      placeOrder(addressData, data);
     }
   };
 
