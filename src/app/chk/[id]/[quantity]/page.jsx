@@ -102,24 +102,28 @@ export default function CheckoutPage({ params }) {
   //fatching product details
   useEffect(() => {
     setLoader(true);
-    async function fetchProduct(id, quantity, index) {
-      console.log(index);
+    async function fetchProduct() {
       try {
-        const response = await axios.get(`/api/fatch-single-product/${id}`);
-        setProduct(response.data.product);
-        setProductItems([...productItems, { product: response.data.product, quantity: quantity }])
+        const response = await axios.post(`/api/fatch-multiple-product`, checkoutCollection);
+        setProduct(response.data.products[response.data.products.length - 1]);
+        console.log("Response", response.data);
+        const mergedArray = response.data.products.map((product) => {
+          const pr = checkoutCollection.find(p => p.id == product._id);
+
+          return product ? { product: product, quantity: pr.quantity } : null;
+        })
+        setProductItems(mergedArray);
       } catch (error) {
         toast.error("Failed to load product");
+        console.log("Error", error.response);
       } finally {
-        if (index == checkoutCollection.length - 1) {
-          setLoader(false);
-        }
+        setLoader(false);
       }
     }
 
-    checkoutCollection.forEach((elm, index) => {
-      fetchProduct(elm.id, elm.quantity, index);
-    });
+    if (checkoutCollection.length > 0) {
+      fetchProduct();
+    }
 
   }, [checkoutCollection]);
 
@@ -277,43 +281,47 @@ export default function CheckoutPage({ params }) {
             {/* Order Summary */}
             <div className="bg-white p-6 rounded-xl shadow h-fit">
               <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-
-              {
-                productItems?.map((product) => {
-                  return (<>
-                    <div><span>Name: </span> <span>{product.productName}</span></div>
-                    <div><span>price: </span> <span>{product.finalPrice}</span></div>
-                  </>)
-                })
-              }
-
               <div>
-                <div>Qty: </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={handleDecrement}
-                    className="p-1 border rounded"
-                  >
-                    <Minus size={16} />
-                  </button>
+                {
+                  productItems?.map((item, index) => {
+                    return (<div key={index} className="mt-2">
+                      <div><span>Name: </span> <span>{item?.product?.productName}</span></div>
+                      <div className="flex justify-between">
 
-                  <input
-                    type="number"
-                    value={updatedQuantity}
-                    onChange={(e) => setUpdatedQuantity(Number(e.target.value))}
-                    className="w-14 text-center border rounded"
-                    min={1}
-                  />
+                        <div><span>Price: </span> <span>{item?.product?.finalPrice}</span></div>
+                        <div><span>quantity: </span> <span>{item?.quantity}</span></div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleDecrement}
+                            className="p-1 border rounded"
+                          >
+                            <Minus size={16} />
+                          </button>
 
-                  <button
-                    type="button"
-                    onClick={handleIncrement}
-                    className="p-1 border rounded"
-                  >
-                    <Plus size={16} />
-                  </button>
-                </div>
+                          <input
+                            type="number"
+                            value={updatedQuantity}
+                            onChange={(e) => setUpdatedQuantity(Number(e.target.value))}
+                            className="w-14 text-center border rounded"
+                            min={1}
+                          />
+
+                          <button
+                            type="button"
+                            onClick={handleIncrement}
+                            className="p-1 border rounded"
+                          >
+                            <Plus size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>)
+                  })
+                }
+              </div>
+              <div>
+
 
 
                 <button
