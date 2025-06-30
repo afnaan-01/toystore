@@ -59,7 +59,7 @@ export async function POST(request) {
 
     for (const product of products) {
       const orderId = await generateUniqueOrderId();
-   console.log()
+   console.log(product);
       const newOrder = new orderModel({
         orderId,
         user: {

@@ -110,7 +110,7 @@ export default function CheckoutPage({ params }) {
         const mergedArray = response.data.products.map((product) => {
           const pr = checkoutCollection.find(p => p.id == product._id);
 
-          return product ? { product: product, quantity: pr.quantity } : null;
+          return product ? { ...product, quantity: pr.quantity } : null;
         })
         setProductItems(mergedArray);
       } catch (error) {
@@ -154,18 +154,17 @@ export default function CheckoutPage({ params }) {
   const placeOrder = async (addressData, data, paymentInfo) => {
     setPlacingOrder(true);
 
+    // console.log("allProducts:",allProdcuts);
+
     try {
-      const response = await axios.post("/api/place-order", {
+      const response = await axios.post("/api/place-multiple-orders", {
         ...addressData,
         paymentMethod: data.paymentMethod,
-        productId: id,
-        quantity: quantity,
-        totalAmount: (product.finalPrice * quantity),
         paymentId: paymentInfo?.paymentId || "rzp123",
         paymentstatus: paymentInfo?.paymentStatus || "pending",
-        productAmount: product.finalPrice,
         shippingCharges: 0,
         tax: 0,
+        products: productItems
       });
       if (response.status === 200) {
         toast.success(response?.data?.message || "Order Placed successfuly");
@@ -285,10 +284,10 @@ export default function CheckoutPage({ params }) {
                 {
                   productItems?.map((item, index) => {
                     return (<div key={index} className="mt-2">
-                      <div><span>Name: </span> <span>{item?.product?.productName}</span></div>
+                      <div><span>Name: </span> <span>{item?.productName}</span></div>
                       <div className="flex justify-between">
 
-                        <div><span>Price: </span> <span>{item?.product?.finalPrice}</span></div>
+                        <div><span>Price: </span> <span>{item?.finalPrice}</span></div>
                         <div><span>quantity: </span> <span>{item?.quantity}</span></div>
                         <div className="flex items-center gap-2">
                           <button
