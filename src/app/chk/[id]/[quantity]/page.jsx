@@ -10,6 +10,7 @@ import AddressForm from "./AddressForm";
 import useCart from "@/allContext/cart";
 import handleRazorpay from "./handleRazorpay";
 import { useRouter } from "next/navigation";
+import { handleIncrement, handleDecrement } from "@/helper/productHelper";
 
 
 export default function CheckoutPage({ params }) {
@@ -89,17 +90,6 @@ export default function CheckoutPage({ params }) {
       console.log("Dialog:", isAddressDialoagOpen);
     }
   }, [user, session, isUserfetched, setIsUserFetched]);
-
-  //quantity of product increment and decrement
-  const handleIncrement = (id) => {
-    setProductItems((prev) => prev.map((produt) => (produt.quantity < 20 && produt._id == id) ?
-      { ...produt, quantity: Number(produt.quantity) + 1 } : produt));
-  };
-
-  const handleDecrement = (id) => {
-    setProductItems((prev) => prev.map((produt) => (produt.quantity > 1 && produt._id == id) ?
-      { ...produt, quantity: Number(produt.quantity) - 1 } : produt));
-  };
 
   //fatching product details
   useEffect(() => {
@@ -301,7 +291,7 @@ export default function CheckoutPage({ params }) {
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
-                            onClick={() => handleDecrement(item._id)}
+                            onClick={() => handleDecrement(item._id, setProductItems)}
                             className="p-1 border rounded"
                           >
                             <Minus size={16} />
@@ -316,7 +306,7 @@ export default function CheckoutPage({ params }) {
 
                           <button
                             type="button"
-                            onClick={() => handleIncrement(item._id)}
+                            onClick={() => handleIncrement(item._id, setProductItems)}
                             className="p-1 border rounded"
                           >
                             <Plus size={16} />
