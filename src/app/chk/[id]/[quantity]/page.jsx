@@ -92,11 +92,13 @@ export default function CheckoutPage({ params }) {
 
   //quantity of product increment and decrement
   const handleIncrement = (id) => {
-    setProductItems((prev) => prev.map((produt) => produt._id == id ? { ...produt, quantity: Number(produt.quantity) + 1 } : produt));
+    setProductItems((prev) => prev.map((produt) => (produt.quantity < 20 && produt._id == id) ?
+      { ...produt, quantity: Number(produt.quantity) + 1 } : produt));
   };
 
   const handleDecrement = (id) => {
-    setProductItems((prev) => prev.map((produt) => produt.quantity > 1 && produt._id == id ? { ...produt, quantity: produt.quantity - 1 } : produt));
+    setProductItems((prev) => prev.map((produt) => (produt.quantity > 1 && produt._id == id) ?
+      { ...produt, quantity: Number(produt.quantity) - 1 } : produt));
   };
 
   //fatching product details
@@ -308,10 +310,8 @@ export default function CheckoutPage({ params }) {
                           <input
                             type="number"
                             value={item?.quantity}
-                            onChange={(e) => setProductItems(prev => prev.map(product =>
-                              product._id == item._id ? { ...product, quantity: e.target.value } : product))}
-                            className="w-14 text-center border rounded"
-                            min={1}
+                            onChange={(e) => { }}
+                            className="w-14 text-center border rounded appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
                           />
 
                           <button
