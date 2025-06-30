@@ -50,6 +50,7 @@ export async function POST(request) {
       paymentstatus,
       shippingCharges,
       tax,
+      isPaid,
     } = await request.json();
 
     const phoneNoInt = parseInt(phoneNo);
@@ -94,7 +95,8 @@ export async function POST(request) {
           tax,
           totalAmount: product.finalPrice * product.quantity,  
         },
-        orderAt: Date.now()
+        orderAt: Date.now(),
+        isPaid
       });
 
       await newOrder.save();

@@ -91,12 +91,12 @@ export default function CheckoutPage({ params }) {
   }, [user, session, isUserfetched, setIsUserFetched]);
 
   //quantity of product increment and decrement
-  const handleIncrement = () => {
-    setUpdatedQuantity((prev) => prev + 1);
+  const handleIncrement = (id) => {
+    setProductItems((prev)=> prev.map((produt)=> produt._id == id ? {...produt, quantity: Number(produt.quantity) + 1} : produt));
   };
 
-  const handleDecrement = () => {
-    setUpdatedQuantity((prev) => (prev > 1 ? prev - 1 : 1)); // prevent going below 1
+  const handleDecrement = (id) => {
+    setProductItems((prev)=> prev.map((produt)=> produt.quantity > 1 && produt._id == id ? {...produt, quantity: produt.quantity - 1} : produt)); 
   };
 
   //fatching product details
@@ -163,6 +163,7 @@ export default function CheckoutPage({ params }) {
         paymentstatus: paymentInfo?.paymentStatus || "pending",
         shippingCharges: 0,
         tax: 0,
+        isPaid: paymentInfo?.paymentStatus == "completed" ? true : false,
         products: productItems
       });
       if (response.status === 200) {
@@ -298,7 +299,7 @@ export default function CheckoutPage({ params }) {
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
-                            onClick={handleDecrement}
+                            onClick={()=> handleDecrement(item._id)}
                             className="p-1 border rounded"
                           >
                             <Minus size={16} />
@@ -306,7 +307,7 @@ export default function CheckoutPage({ params }) {
 
                           <input
                             type="number"
-                            value={updatedQuantity}
+                            value={item?.quantity}
                             onChange={(e) => setUpdatedQuantity(Number(e.target.value))}
                             className="w-14 text-center border rounded"
                             min={1}
@@ -314,7 +315,7 @@ export default function CheckoutPage({ params }) {
 
                           <button
                             type="button"
-                            onClick={handleIncrement}
+                            onClick={()=> handleIncrement(item._id)}
                             className="p-1 border rounded"
                           >
                             <Plus size={16} />
