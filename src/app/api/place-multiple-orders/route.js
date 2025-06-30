@@ -81,7 +81,7 @@ export async function POST(request) {
         },
         product: {
           productId: product._id,
-          quantity: product.quantity, // or modify if you accept quantity from frontend
+          quantity: product.quantity,  
         },
         paymentMethod,
         paymentInfo: {
@@ -92,7 +92,7 @@ export async function POST(request) {
           productAmount: product.finalPrice,
           shippingCharges,
           tax,
-          totalAmount: product.finalPrice, // optional: you can recalculate if needed
+          totalAmount: product.finalPrice * product.quantity,  
         },
         orderAt: Date.now()
       });
