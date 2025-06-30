@@ -82,13 +82,13 @@ export default function CheckoutPage({ params }) {
 
   //dialog box setter if user || session || address updated
   useEffect(() => {
-    if (!isUserfetched) return;
+    // if (!isUserfetched) return;
 
     if ((!session || !user || user?.addresses?.length === 0)) {
       setIsAddressDialoagOpen(true);
-      console.log(isAddressDialoagOpen)
+      console.log("Dialog:",isAddressDialoagOpen);
     }
-  }, [user, session])
+  }, [user, session, isUserfetched, setIsUserFetched]);
 
   //quantity of product increment and decrement
   const handleIncrement = () => {
