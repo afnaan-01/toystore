@@ -86,17 +86,17 @@ export default function CheckoutPage({ params }) {
 
     if ((!session || !user || user?.addresses?.length === 0)) {
       setIsAddressDialoagOpen(true);
-      console.log("Dialog:",isAddressDialoagOpen);
+      console.log("Dialog:", isAddressDialoagOpen);
     }
   }, [user, session, isUserfetched, setIsUserFetched]);
 
   //quantity of product increment and decrement
   const handleIncrement = (id) => {
-    setProductItems((prev)=> prev.map((produt)=> produt._id == id ? {...produt, quantity: Number(produt.quantity) + 1} : produt));
+    setProductItems((prev) => prev.map((produt) => produt._id == id ? { ...produt, quantity: Number(produt.quantity) + 1 } : produt));
   };
 
   const handleDecrement = (id) => {
-    setProductItems((prev)=> prev.map((produt)=> produt.quantity > 1 && produt._id == id ? {...produt, quantity: produt.quantity - 1} : produt)); 
+    setProductItems((prev) => prev.map((produt) => produt.quantity > 1 && produt._id == id ? { ...produt, quantity: produt.quantity - 1 } : produt));
   };
 
   //fatching product details
@@ -207,12 +207,12 @@ export default function CheckoutPage({ params }) {
     }
   };
 
-  useEffect(()=>{
-     const amount =  productItems.reduce((sum, product)=>{
-        return sum + product.finalPrice * product.quantity;
-      },0)
-      setCheckoutAmount(amount);
-  },[productItems])
+  useEffect(() => {
+    const amount = productItems.reduce((sum, product) => {
+      return sum + product.finalPrice * product.quantity;
+    }, 0)
+    setCheckoutAmount(amount);
+  }, [productItems])
 
   //on submit if user avalible 
 
@@ -299,7 +299,7 @@ export default function CheckoutPage({ params }) {
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
-                            onClick={()=> handleDecrement(item._id)}
+                            onClick={() => handleDecrement(item._id)}
                             className="p-1 border rounded"
                           >
                             <Minus size={16} />
@@ -308,14 +308,15 @@ export default function CheckoutPage({ params }) {
                           <input
                             type="number"
                             value={item?.quantity}
-                            onChange={(e) => setUpdatedQuantity(Number(e.target.value))}
+                            onChange={(e) => setProductItems(prev => prev.map(product =>
+                              product._id == item._id ? { ...product, quantity: e.target.value } : product))}
                             className="w-14 text-center border rounded"
                             min={1}
                           />
 
                           <button
                             type="button"
-                            onClick={()=> handleIncrement(item._id)}
+                            onClick={() => handleIncrement(item._id)}
                             className="p-1 border rounded"
                           >
                             <Plus size={16} />
@@ -327,7 +328,7 @@ export default function CheckoutPage({ params }) {
                 }
               </div>
               <div>
-              <div>Total Amount : <span>{`${checkoutAmount}`}</span></div>
+                <div>Total Amount : <span>{`${checkoutAmount}`}</span></div>
 
 
 
