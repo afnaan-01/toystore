@@ -22,7 +22,7 @@ export default async function handleRazorpay({ amount, name, email, contact },pl
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // from .env
       amount: order.amount,
       currency: order.currency,
-      name: "Your Company",
+      name: "KAAS Tech",
       description: "Test Transaction",
       image: "/logo.png", // Optional
       order_id: order.id,

@@ -18,7 +18,7 @@ export default function CheckoutPage({ params }) {
   const [checkoutCollection, setCheckoutCollection] = useState([]);
   const [productItems, setProductItems] = useState([{}]);
   const [loader, setLoader] = useState(false);
-  const [product, setProduct] = useState({})
+  const [checkoutAmount, setCheckoutAmount] = useState();
   const [updatedQuantity, setUpdatedQuantity] = useState(Number(quantity) || 1);
   const [placingOrder, setPlacingOrder] = useState(false);
   const { data: session } = useSession()
@@ -105,7 +105,6 @@ export default function CheckoutPage({ params }) {
     async function fetchProduct() {
       try {
         const response = await axios.post(`/api/fatch-multiple-product`, checkoutCollection);
-        setProduct(response.data.products[response.data.products.length - 1]);
         console.log("Response", response.data);
         const mergedArray = response.data.products.map((product) => {
           const pr = checkoutCollection.find(p => p.id == product._id);
@@ -195,10 +194,10 @@ export default function CheckoutPage({ params }) {
 
     if (watch("paymentMethod") == "razorpay") {
       await handleRazorpay({
-        amount: 2000,
-        name: "Abdul Aaquib",
-        email: "aquib123@gmail.com",
-        contact: "9049929292"
+        amount: checkoutAmount,
+        name: addressData.fullName,
+        email: addressData.email,
+        contact: addressData.contact
       }, placeOrder, addressData, data);
 
     }
@@ -206,6 +205,13 @@ export default function CheckoutPage({ params }) {
       placeOrder(addressData, data);
     }
   };
+
+  useEffect(()=>{
+     const amount =  productItems.reduce((sum, product)=>{
+        return sum + product.finalPrice * product.quantity;
+      },0)
+      setCheckoutAmount(amount);
+  },[productItems])
 
   //on submit if user avalible 
 
@@ -320,6 +326,7 @@ export default function CheckoutPage({ params }) {
                 }
               </div>
               <div>
+              <div>Total Amount : <span>{`${checkoutAmount}`}</span></div>
 
 
 
