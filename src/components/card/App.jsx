@@ -40,7 +40,7 @@ const App = ({ id, title, imageUrl, price, finalPrice }) => {
                     }}>
                     Add to cart
                 </Button>
-                <Button variant="buynow" onClick={() => router.push(`/chk/${id}/1`)}>
+                <Button variant="buynow" onClick={() => router.push(`/checkout/${id}/1`)}>
                     Buy Now
                 </Button>
             </div>

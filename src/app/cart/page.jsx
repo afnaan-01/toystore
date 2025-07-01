@@ -135,7 +135,7 @@ const App = () => {
               </div>
 
               <button
-                onClick={() => router.push(`/chk/cart/${cartProducts.length}`)}
+                onClick={() => router.push(`/checkout/cart/${cartProducts.length}`)}
                 className="block w-full mt-6 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-all text-center text-sm"
               >
                 Proceed to Checkout
