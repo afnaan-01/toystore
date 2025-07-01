@@ -12,7 +12,7 @@ import { handleIncrement, handleDecrement } from '@/helper/productHelper';
 import { Minus, Plus } from 'lucide-react';
 
 const App = () => {
-  const { cartItems, setCartItems } = useCart();
+  const { cartItems, setCartItems, removeCart } = useCart();
   const [cartProducts, setCartProducts] = useState([]);
   const [loader, setLoader] = useState(false);
 
@@ -106,7 +106,7 @@ const App = () => {
                       ₹{item?.quantity * item?.finalPrice}
                     </p>
                     <button
-                      onClick={() => { }}
+                      onClick={() => removeCart(item._id)}
                       className="text-red-500 text-sm hover:underline mt-2"
                     >
                       Remove

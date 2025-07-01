@@ -23,3 +23,11 @@ export const handleDecrement = (id, setProductItems) => {
         })
     );
 };
+
+export const handleSingleIncrement = (setQuantity) => {
+    setQuantity((prev) => (prev < 20 ? prev + 1 : prev));
+};
+
+export const handleSingleDecrement = (setQuantity) => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+};

@@ -10,14 +10,15 @@ import { useEffect, useRef, useState } from "react";
 import useAllProducts from "@/allContext/allproducts";
 import axios from "axios";
 import Skeleton from "../Skeleton";
+import { Minus, Plus } from "lucide-react";
+import { handleSingleIncrement, handleSingleDecrement } from "@/helper/productHelper";
 
 
 const ProductPage = ({ params }) => {
 
   const { allProducts, setAllProducts } = useAllProducts();
+  const [quantity, setQuantity] = useState(1);
 
-
-  const qtyRef = useRef(null);
   const router = useRouter();
 
   // Access product ID from URL
@@ -94,26 +95,37 @@ const ProductPage = ({ params }) => {
                 </div>
 
                 {/* Product Quantity Picker */}
-                <div className="mt-4">
-                  <label htmlFor="quantity" className="block text-gray-700 mb-2">
-                    Quantity:
-                  </label>
-                  <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    min="1"
-                    defaultValue="1"
-                    className="w-20 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    ref={qtyRef}
-                  />
-                </div>
+                <div className="mt-2 flex items-center gap-2">
+                      <span className="text-sm text-gray-500">Qty:</span>
+                      {/* Your quantity update logic here */}
+                      <button
+                        type="button"
+                        onClick={() => handleSingleDecrement(setQuantity)}
+                        className="p-1 border rounded"
+                      >
+                        <Minus size={16} />
+                      </button>
+                      <input
+                        type="number"
+                        value={quantity}
+                        onChange={(e) => { }}
+                        className="w-14 text-center border rounded appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={() => handleSingleIncrement(setQuantity)}
+                        className="p-1 border rounded"
+                      >
+                        <Plus size={16} />
+                      </button>
+                    </div>
 
                 <div className="border-b border-gray-400 pb-4">
                   <Button variant={"addcart"}>
                     Add to cart
                   </Button>
-                  <Button variant={"buynow"} onClick={() => router.push(`/checkout/${id}/${qtyRef.current.value}`)}>
+                  <Button variant={"buynow"} onClick={() => router.push(`/checkout/${id}/${quantity}`)}>
                     Buy Now
                   </Button>
                 </div>
