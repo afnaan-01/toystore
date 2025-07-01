@@ -21,6 +21,8 @@ export async function POST(request) {
    try {
       const {
         addressId, 
+        fullName,
+        email,
         address, 
         city, 
         state, 
@@ -41,6 +43,8 @@ export async function POST(request) {
       { _id: userId, "addresses._id": addressId },
       {
         $set: {
+          "addresses.$.fullName": fullName,
+          "addresses.$.email": email,
           "addresses.$.address": address,
           "addresses.$.city": city,
           "addresses.$.state": state,
