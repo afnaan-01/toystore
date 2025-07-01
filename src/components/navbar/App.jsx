@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { RiMenuLine, RiCloseLine, RiShoppingCartLine, RiUserLine } from "react-icons/ri";
 import { useSession, signOut } from "next-auth/react";
 import { LogInIcon, LogOutIcon } from "lucide-react";
@@ -10,6 +10,19 @@ const Navbar = ({ newCss }) => {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const {data:session} = useSession();
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // Cleanup when component unmounts
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [mobileOpen]);
 
   return (
     <header className={`bg-white shadow-md sticky top-0 z-50 ${newCss}`}>
@@ -29,7 +42,7 @@ const Navbar = ({ newCss }) => {
 
         {/* Nav Links - Desktop */}
         <nav className="hidden md:flex space-x-6 md:items-center">
-          <Link href="/" className="text-gray-600 hover:text-blue-600 font-bold">Home</Link>
+          <Link href="/" className="text-gray-600 hover:text-blue-600 font-bold font">Home</Link>
           <Link href="/collection/all-products" className="text-gray-600 hover:text-blue-600 font-bold">Shop</Link>
           <Link href="/cart" className="text-gray-600 hover:text-blue-600 flex items-center font-bold">
             <RiShoppingCartLine className="mr-1" /> Cart
@@ -49,7 +62,7 @@ const Navbar = ({ newCss }) => {
 
       {/* Mobile Nav Menu */}
       {mobileOpen && (
-        <nav className="md:hidden bg-white px-4 pb-4 flex flex-col space-y-3">
+        <nav className="absolute w-full h-screen md:hidden bg-white px-4 pb-4 flex flex-col space-y-3">
           <Link href="/" className="text-gray-700 hover:text-blue-600">Home</Link>
           <Link href="/shop" className="text-gray-700 hover:text-blue-600">Shop</Link>
           <Link href="/cart" className="text-gray-700 hover:text-blue-600 flex items-center">

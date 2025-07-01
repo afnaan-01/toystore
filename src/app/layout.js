@@ -31,15 +31,15 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased baloo-2-all h-full`}
       >
         <AuthProvider>
-        <AllProductsProvider>
-          <CartProvider>
-            {children}
-            <Toaster position="top-center" richColors />
-          </CartProvider>
-        </AllProductsProvider>
+          <AllProductsProvider>
+            <CartProvider>
+              {children}
+              <Toaster position="top-center" richColors />
+            </CartProvider>
+          </AllProductsProvider>
         </AuthProvider>
 
-      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
       </body>
     </html>
   );

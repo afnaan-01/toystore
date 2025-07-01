@@ -29,16 +29,8 @@ export default function CollectionPage({params}) {
   
     fetchProducts();
   }, []);
-  const collection = collections.find((collection) => collection.id === parseInt(id));
+  const collection = collections?.find((collection) => collection?.id === parseInt(id));
   const [sortOption, setSortOption] = useState("default");
-
-  // const sortedProducts = [...filteredProducts].sort((a, b) => {
-  //   if (sortOption === "low-to-high") return a.price - b.price;
-  //   if (sortOption === "high-to-low") return b.price - a.price;
-  //   return 0;
-  // });
-
-  // const sortedProducts = [...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts, ...filteredProducts];
 
   return (
     <div>
@@ -48,7 +40,7 @@ export default function CollectionPage({params}) {
       <div className="px-4 py-8 max-w-7xl mx-auto">
         {/* Page Title & Sort */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">{collection.title}</h1>
+          <h1 className="text-2xl font-bold text-gray-800">{collection?.title || "Products"}</h1>
 
           <div>
             <select
