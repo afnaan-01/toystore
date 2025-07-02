@@ -119,6 +119,14 @@
   font-style: normal;
 }
 
+@theme {
+  --font-poppins: "Poppins";
+  --font-quicksand: "Quicksand";
+  --font-crimsonpro: "Crimson_Pro";
+  --font-inter: "inter";
+  --font-outfit: "outfit";
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

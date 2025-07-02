@@ -28,7 +28,7 @@ const Navbar = ({ newCss }) => {
     <header className={`bg-white shadow-md sticky top-0 z-50 ${newCss}`}>
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
-        <Link href="/" className="text-xl font-bold text-blue-600">
+        <Link href="/" className="text-xl font-bold text-blue-600 font-quicksand">
           ToyStore
         </Link>
 
@@ -63,12 +63,12 @@ const Navbar = ({ newCss }) => {
       {/* Mobile Nav Menu */}
       {mobileOpen && (
         <nav className="absolute w-full h-screen md:hidden bg-white px-4 pb-4 flex flex-col space-y-3">
-          <Link href="/" className="text-gray-700 hover:text-blue-600">Home</Link>
-          <Link href="/shop" className="text-gray-700 hover:text-blue-600">Shop</Link>
-          <Link href="/cart" className="text-gray-700 hover:text-blue-600 flex items-center">
+          <Link href="/" className="text-gray-700 hover:text-blue-600 font-quicksand">Home</Link>
+          <Link href="/shop" className="text-gray-700 hover:text-blue-600 font-quicksand">Shop</Link>
+          <Link href="/cart" className="text-gray-700 hover:text-blue-600 flex items-center font-quicksand">
             <RiShoppingCartLine className="mr-1" /> Cart
           </Link>
-          <Link href="/auth" className="text-gray-700 hover:text-blue-600 flex items-center">
+          <Link href="/auth" className="text-gray-700 hover:text-blue-600 flex items-center font-quicksand">
             <RiUserLine className="mr-1" /> Login
           </Link>
         </nav>

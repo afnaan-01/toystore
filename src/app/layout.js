@@ -1,9 +1,34 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono} from "next/font/google";
+import { Poppins, Quicksand, Crimson_Pro, Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/allContext/cart";
 import { AllProductsProvider } from "@/allContext/allproducts";
 import { Toaster } from "sonner";
 import AuthProvider from "@/components/AuthProvider/page";
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ['latin'],
+  weight: "400"
+})
+
+const quicksand = Quicksand({
+  variable: "--font-quicksand",
+  subsets: ["latin"]
+})
+const crimsonpro = Crimson_Pro({
+  variable: "--font-crimsonpro",
+  subsets: ["latin"]
+})
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"]
+})
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"]
+})
+
 
 
 const geistSans = Geist({
@@ -28,7 +53,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased baloo-2-all h-full`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${quicksand.variable} ${crimsonpro.variable} ${inter.variable} ${outfit.variable} antialiased baloo-2-all h-full`}
       >
         <AuthProvider>
           <AllProductsProvider>
