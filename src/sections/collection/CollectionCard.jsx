@@ -18,7 +18,7 @@ const CollectionCard = ({ title, imageUrl, id }) => {
         <div className="p-4 text-center">
           <h3 className="text-lg font-semibold text-gray-800">
             {title} 
-            <i className="relative ri-arrow-right-long-line group-hover:left-1 transition-all duration-500"></i>
+            <i className="relative ri-arrow-right-long-line transition-all duration-500 group-hover:left-2"></i>
             </h3>
         </div>
       </Link>

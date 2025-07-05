@@ -127,6 +127,34 @@
   --font-outfit: "outfit";
 }
 
+@layer utilities {
+  .animate-slide-in-right {
+    animation: slideInRight 0.7s forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.7s forwards;
+  }
+
+  @keyframes slideInRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  @keyframes slideInLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

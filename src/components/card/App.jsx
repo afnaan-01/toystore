@@ -43,6 +43,7 @@ const App = ({ id, title, imageUrl, price, finalPrice }) => {
                 <Button variant="buynow" onClick={() => router.push(`/checkout/${id}/1`)}>
                     Buy Now
                 </Button>
+                
             </div>
 
         </div>

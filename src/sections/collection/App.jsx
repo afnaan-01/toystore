@@ -32,13 +32,14 @@ const App = () => {
 
 
     return (
-        <div className='bg-blue-400 '>
-            <section className="px-4 py-10 max-w-7xl mx-auto">
-                <h2 className="text-2xl font-bold text-white mb-6 text-center">
+
+        <div className='bg-blue-400'>
+            <section className="py-10 max-w-[1350px] mx-auto">
+                <h2 className="text-2xl md:text-4xl font-bold font-quicksand text-white mb-6 text-center">
                     Shop by Collection
                 </h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="px-2 xl:px-0 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     {collections.map((item, index) => (
                         <CollectionCard
                             key={index}

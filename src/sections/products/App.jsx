@@ -33,12 +33,12 @@ const App = ({ text, id }) => {
 
   return (
     <div className={`bg-${bgColor}-50`}>
-      <section className="px-4 py-10 max-w-7xl mx-auto">
+      <section className="px-3 py-10 max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
           {text}
         </h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
           {products.map((product) => (
             <Card
               key={product._id}
