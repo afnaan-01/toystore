@@ -45,10 +45,12 @@ const Footer = ()=> {
         <div>
           <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-1 text-sm">
-            <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">Terms of Use</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/contact-us">Contact</a></li>
+            <li><a href="/privacy-and-policy">Privacy Policy</a></li>
+            <li><a href="/terms-and-conditions">Terms and Conditions</a></li>
+            <li><a href="/shipping-and-delivery-policy">Shipping Policy</a></li>
+            <li><a href="/shipping-and-refund">Cancellation & Refund</a></li>
           </ul>
         </div>
 
