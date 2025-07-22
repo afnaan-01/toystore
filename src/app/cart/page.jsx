@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import { handleIncrement, handleDecrement } from '@/helper/productHelper';
 import { Minus, Plus } from 'lucide-react';
+import Header from '@/components/navbar/App';
 
 const App = () => {
   const { cartItems, setCartItems, removeCart } = useCart();
@@ -47,8 +48,9 @@ const App = () => {
 
   return (
     <>
-      <section className="max-w-6xl mx-auto px-4 py-10">
-        <h1 className="text-2xl font-bold mb-8 text-center">Your Cart</h1>
+      <Header />
+      <section className="max-w-[1350px] mx-auto px-1 md:px-4 py-10">
+        <h1 className="text-2xl font-bold mb-8 text-center border">Your Cart</h1>
 
         {cartItems.length === 0 ? (
           <div className="text-center text-gray-500">
@@ -58,59 +60,61 @@ const App = () => {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-md:w-screen">
             {/* Cart Items */}
-            <div className="md:col-span-2 space-y-6">
+            <div className="md:col-span-2 space-y-6 max-md:w-full">
               {cartProducts.map((item, index) => (
                 <div
                   key={index}
-                  className="flex gap-4 p-4 bg-white rounded shadow-sm"
+                  className="flex gap-4 md:p-4 rounded shadow-sm max-md:w-full"
                 >
                   <img
                     src={item?.images[0]}
                     alt={item?.productName}
                     className="w-24 h-24 object-cover rounded"
                   />
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-gray-800">{item?.productName}</h3>
-                    <p className="text-gray-500 text-sm mt-1">₹{item?.finalPrice}</p>
+                  <div className='flex flex-col md:flex-row flex-1'>
+                    <div className="flex-1 w-full overflow-hidden">
+                      <h3 className="font-semibold max-sm:text-xs">{item?.productName}</h3>
+                      <p className="text-gray-500 text-sm mt-1">₹{item?.finalPrice}</p>
 
-                    <div className="mt-2 flex items-center gap-2">
-                      <span className="text-sm text-gray-500">Qty:</span>
-                      {/* Your quantity update logic here */}
-                      <button
-                        type="button"
-                        onClick={() => handleDecrement(item._id, setCartItems)}
-                        className="p-1 border rounded"
-                      >
-                        <Minus size={16} />
-                      </button>
-                      <input
-                        type="number"
-                        value={item?.quantity}
-                        onChange={(e) => { }}
-                        className="w-14 text-center border rounded appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                      />
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className="text-sm text-gray-500">Qty:</span>
+                        {/* Your quantity update logic here */}
+                        <button
+                          type="button"
+                          onClick={() => handleDecrement(item._id, setCartItems)}
+                          className="p-1 border rounded"
+                        >
+                          <Minus size={16} />
+                        </button>
+                        <input
+                          type="number"
+                          value={item?.quantity}
+                          onChange={(e) => { }}
+                          className="w-14 text-center border rounded appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                        />
 
+                        <button
+                          type="button"
+                          onClick={() => handleIncrement(item._id, setCartItems)}
+                          className="p-1 border rounded"
+                        >
+                          <Plus size={16} />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-700">
+                        ₹{item?.quantity * item?.finalPrice}
+                      </p>
                       <button
-                        type="button"
-                        onClick={() => handleIncrement(item._id, setCartItems)}
-                        className="p-1 border rounded"
+                        onClick={() => removeCart(item._id)}
+                        className="text-red-500 text-sm hover:underline mt-2"
                       >
-                        <Plus size={16} />
+                        Remove
                       </button>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-gray-700">
-                      ₹{item?.quantity * item?.finalPrice}
-                    </p>
-                    <button
-                      onClick={() => removeCart(item._id)}
-                      className="text-red-500 text-sm hover:underline mt-2"
-                    >
-                      Remove
-                    </button>
                   </div>
                 </div>
               ))}
