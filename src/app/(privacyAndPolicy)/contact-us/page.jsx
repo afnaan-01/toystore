@@ -5,9 +5,9 @@ const ContactUs = () => {
   return (
     <div>
     <Header />
-      <div className="bg-background min-h-screen px-4 py-10">
+      <div className="bg-background min-h-screen px-4 py-3">
         {/* Header Section */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-3">
           <h1 className="text-4xl md:text-5xl font-playful text-primary mb-3">
             Get in Touch
           </h1>
@@ -16,7 +16,7 @@ const ContactUs = () => {
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 gap-10">
           {/* Contact Form */}
           <form className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
             <h2 className="text-xl font-bold text-dark mb-6">Send Us a Message</h2>
@@ -25,6 +25,7 @@ const ContactUs = () => {
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">Full Name</label>
               <input
+                name="name"
                 type="text"
                 placeholder="Enter your name"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
@@ -36,6 +37,7 @@ const ContactUs = () => {
               <label className="block text-sm font-medium mb-2">Email</label>
               <input
                 type="email"
+                name="email"
                 placeholder="Enter your email"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
               />
@@ -45,13 +47,14 @@ const ContactUs = () => {
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">Message</label>
               <textarea
+              name="message"
                 rows="4"
                 placeholder="Write your message"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
               ></textarea>
             </div>
 
-            <button className="w-full bg-primary text-white py-3 rounded-lg text-lg font-semibold cursor-pointer transition">
+            <button type="submit" className="w-full bg-primary text-white py-3 rounded-lg text-lg font-semibold cursor-pointer transition">
               Send Message
             </button>
 
