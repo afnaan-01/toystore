@@ -4,7 +4,6 @@ import mongoose from 'mongoose'
 const connection = {}
 export default async function dbConnect(){
     if(connection.isConnected){
-      console.log("Already Connected to data base");
       return
     }
 

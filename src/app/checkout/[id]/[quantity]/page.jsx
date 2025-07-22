@@ -49,13 +49,10 @@ export default function CheckoutPage({ params }) {
 
   useEffect(() => {
     if (id == 'cart') {
-      console.log('cart:')
-      console.log(cartItems);
       setCheckoutCollection(cartItems);
     }
     else {
-      console.log("id", id);
-      console.log("quantiy", quantity);
+      
       setCheckoutCollection([{ id: id, quantity: quantity }])
     }
   }, [cartItems])
@@ -67,13 +64,13 @@ export default function CheckoutPage({ params }) {
       if (session) {
         try {
           const response = await axios.post("/api/fatch-user", { userId: session._id });
-          console.log(response)
+         
           if (response.status === 200) {
             setUser(response.data.user);
             setIsUserFetched(true);
           }
         } catch (error) {
-          console.log(error)
+           
         }
       }
     };
@@ -87,7 +84,7 @@ export default function CheckoutPage({ params }) {
 
     if ((!session || !user || user?.addresses?.length === 0)) {
       setIsAddressDialoagOpen(true);
-      console.log("Dialog:", isAddressDialoagOpen);
+      
     }
   }, [user, session, isUserfetched, setIsUserFetched]);
 
@@ -97,7 +94,6 @@ export default function CheckoutPage({ params }) {
     async function fetchProduct() {
       try {
         const response = await axios.post(`/api/fatch-multiple-product`, checkoutCollection);
-        console.log("Response", response.data);
         const mergedArray = response.data.products.map((product) => {
           const pr = checkoutCollection.find(p => p.id == product._id);
 
@@ -106,7 +102,7 @@ export default function CheckoutPage({ params }) {
         setProductItems(mergedArray);
       } catch (error) {
         toast.error("Failed to load product");
-        console.log("Error", error.response);
+         
       } finally {
         setLoader(false);
       }
@@ -119,9 +115,7 @@ export default function CheckoutPage({ params }) {
   }, [checkoutCollection]);
 
   useEffect(() => {
-    console.log("chechoutCollection", checkoutCollection);
-    console.log("productItems", productItems);
-
+      
   }, [productItems]);
 
   //add address functionality
@@ -145,8 +139,6 @@ export default function CheckoutPage({ params }) {
   const placeOrder = async (addressData, data, paymentInfo) => {
     setPlacingOrder(true);
 
-    // console.log("allProducts:",allProdcuts);
-
     try {
       const response = await axios.post("/api/place-multiple-orders", {
         ...addressData,
@@ -168,7 +160,6 @@ export default function CheckoutPage({ params }) {
         toast.success(response?.data?.message || "Error while Adding Address");
       }
     } catch (error) {
-      console.log(error)
       toast.error(error.response?.data?.message || "Unexpected Error");
     }
     finally {
@@ -177,13 +168,9 @@ export default function CheckoutPage({ params }) {
     }
   }
 
-  console.log(user)
   //on submit if user not avalible 
   const onSubmit = async (data) => {
-
-    console.log("🛒 Order Data:", data);
     const addressData = isAddressDialoagOpen ? data : user.addresses[selectedAddressIndex];
-    console.log("🛒 Address Data:", addressData);
 
     if (watch("paymentMethod") == "razorpay") {
       await handleRazorpay({
@@ -257,7 +244,6 @@ export default function CheckoutPage({ params }) {
                     type="button"
                     onClick={() => {
                       setIsAddressDialoagOpen(true);
-                      console.log(isAddressDialoagOpen);
                     }}
                     className="bg-blue-500 cursor-pointer text-white px-4 py-2 rounded"
                   >

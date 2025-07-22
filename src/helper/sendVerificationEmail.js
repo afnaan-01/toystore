@@ -1,5 +1,6 @@
 import { resend } from "@/lib/resend";
 import VerificationEmail from "../../emails/VerificationEmails";
+import { toast } from "sonner";
 
 
 export async function  sendVerificationEmail(email, name, verificationCode ) {
@@ -12,7 +13,7 @@ export async function  sendVerificationEmail(email, name, verificationCode ) {
         })
         return {success: true, message: "Verification Email Send Successfully"}
     } catch (error) {
-        console.log("Error sending verfication email", error)
+        toast.error("Error sending verfication email", error)
         return {success: false, message: "failed to send Verfication Email ! Please try again leater."}
     }
 }

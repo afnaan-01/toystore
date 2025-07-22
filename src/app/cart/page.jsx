@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { handleIncrement, handleDecrement } from '@/helper/productHelper';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, Trash } from 'lucide-react';
 import Header from '@/components/navbar/App';
 
 const App = () => {
@@ -21,9 +21,7 @@ const App = () => {
     setLoader(true);
     async function fetchProduct() {
       try {
-        console.log(cartItems);
         const response = await axios.post(`/api/fatch-multiple-product`, cartItems);
-        console.log("Response", response.data);
         const mergedArray = response.data.products.map((product) => {
           const pr = cartItems.find(p => p.id == product._id);
 
@@ -32,7 +30,6 @@ const App = () => {
         setCartProducts(mergedArray);
       } catch (error) {
         toast.error("Failed to load product");
-        console.log("Error", error);
       } finally {
         setLoader(false);
       }
@@ -55,7 +52,7 @@ const App = () => {
         {cartItems.length === 0 ? (
           <div className="text-center text-gray-500">
             Your cart is empty.
-            <Link href="/shop" className="text-blue-600 underline ml-2">
+            <Link href="/" className="text-blue-600 underline ml-2">
               Continue shopping
             </Link>
           </div>
@@ -112,7 +109,7 @@ const App = () => {
                         onClick={() => removeCart(item._id)}
                         className="text-red-500 text-sm hover:underline mt-2"
                       >
-                        Remove
+                        <Trash size={16} />
                       </button>
                     </div>
                   </div>

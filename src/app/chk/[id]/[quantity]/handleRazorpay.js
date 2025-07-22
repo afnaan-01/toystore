@@ -28,7 +28,6 @@ export default async function handleRazorpay({ amount, name, email, contact },pl
       order_id: order.id,
       handler: function (response) {
         // Handle success (e.g., send to backend or show success UI)
-        console.log("Payment success:", response);
         alert("Payment successful!");
         placeOrder(
             addressData,

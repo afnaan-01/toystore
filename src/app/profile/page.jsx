@@ -30,7 +30,7 @@ export default function UserProfilePage() {
             setUser(response.data.user);
           }
         } catch (error) {
-          console.log(error)
+          toast.error("Error fetching user data");
         }
       }
     };

@@ -36,7 +36,6 @@ const App = ({ id, title, imageUrl, price, finalPrice }) => {
                 </div>
                 <Button variant={"addcart"} onClick={() => {
                     addToCart(id);
-                    console.log(cartItems);
                 }}>
                     Add to cart
                 </Button>
