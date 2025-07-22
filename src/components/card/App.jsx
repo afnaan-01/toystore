@@ -5,13 +5,18 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import useCart from "@/allContext/cart";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const App = ({ id, title, imageUrl, price, finalPrice }) => {
 
     const { addToCart, cartItems } = useCart();
 
     const router = useRouter();
-
+    const handleAddtocart = ()=>{
+         addToCart(id);
+           const truncatedTitle = title.length > 20 ? title.slice(0, 20) + '...' : title;
+           toast.success(truncatedTitle + "   Added To Cart");
+    }
     return (
         <div className="relative bg-white rounded-lg shadow hover:shadow-lg overflow-hidden hover:bottom-1 transition-all group">
             <Link href={`/product/${id}`}>
@@ -34,10 +39,7 @@ const App = ({ id, title, imageUrl, price, finalPrice }) => {
                         <p className="text-gray-600 line-through">₹{price}</p>
                     </div>
                 </div>
-                <Button variant={"addcart"} onClick={() => {
-                    addToCart(id);
-                    console.log(cartItems);
-                }}>
+                <Button variant={"addcart"} onClick={() => {handleAddtocart()}}>
                     Add to cart
                 </Button>
                 <Button variant="buynow" onClick={() => router.push(`/checkout/${id}/1`)}>
