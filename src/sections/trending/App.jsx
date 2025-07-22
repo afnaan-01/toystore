@@ -37,30 +37,7 @@ const Trending = () => {
     ]
 
     return (
-        // <div className="my-10 max-w-[1350px] mx-auto">
-        //     <h2 className="font-quicksand font-bold text-center text-2xl md:text-4xl">Trending Toys</h2>
-
-        //     <div className="overflow-x-auto my-2">
-        //         <div className="grid grid-flow-col auto-cols-[100%] md:auto-cols-[20%] whitespace-nowrap overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden mx-auto my-2">
-        //             {
-        //                 images.map((elm, index) => {
-        //                     return (
-        //                         <div key={index} className="relative h-full mx-2 flex flex-col justify-between bg-accent rounded-2xl overflow-hidden transition-all cursor-pointer">
-        //                             <div className="aspect-quare h-[75%] w-full">
-        //                                 <img src={elm.image} alt={elm.title} className="h-full w-full" />
-        //                             </div>
-        //                             <div className="flex flex-col items-center mb-2">
-        //                                 <span className="text-lg">{elm.title}</span>
-        //                                 <span className="font-bold flex gap-2"><span>Under</span>{elm.price}</span>
-        //                                 <button className="bg-black text-white w-10/12 py-2 rounded-ful transition duration-300 shadow-md hover:shadow-lg">View</button>
-        //                             </div>
-        //                         </div>
-        //                     )
-        //                 })
-        //             }
-        //         </div>
-        //     </div>
-        // </div>
+     
 
 
         <div className="md:w-1/2 p-3 bg-white rounded-2xl">

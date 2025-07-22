@@ -29,12 +29,10 @@ const ProductPage = ({ params }) => {
 
     const fetchProducts = async () => {
       try {
-        console.log(id);
         const res = await axios.get(`/api/fatch-single-product/${id}`);
-        console.log('Fetched data:', res.data.product);
         setProduct(res.data.product || {});
       } catch (err) {
-        console.error('Error fetching product:', err);
+      
       } finally {
         // setLoading(false);
       }

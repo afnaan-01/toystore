@@ -18,10 +18,8 @@ export default function CollectionPage({params}) {
     const fetchProducts = async () => {
       try {
          const res = await axios.post("/api/product-fatch-by-collection-id", {collectionId: parseInt(id),});
-        console.log('Fetched data:', res.data.products);  
-        setProducts(res.data.products || []);  
+         setProducts(res.data.products || []);  
       } catch (err) {
-        console.error('Error fetching products:', err);
       } finally {
         setLoading(false);
       }

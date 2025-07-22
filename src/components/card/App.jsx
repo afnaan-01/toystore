@@ -39,7 +39,10 @@ const App = ({ id, title, imageUrl, price, finalPrice }) => {
                         <p className="text-gray-600 line-through">₹{price}</p>
                     </div>
                 </div>
-                <Button variant={"addcart"} onClick={() => {handleAddtocart()}}>
+                <Button variant={"addcart"} onClick={() => {
+                    addToCart(id);
+                    console.log(cartItems);
+                }}>
                     Add to cart
                 </Button>
                 <Button variant="buynow" onClick={() => router.push(`/checkout/${id}/1`)}>
