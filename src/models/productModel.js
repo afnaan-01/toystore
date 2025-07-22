@@ -2,14 +2,17 @@ import mongoose,{Schema, Document} from "mongoose";
 
 
 const reviews = new mongoose.Schema({
-    userId:{
-      type: String
+    customerName:{
+      type: String,
+      required: [true, "customerName is required"],
     },
     comment:{
         type: String
     },
     rating:{
-        type: Number
+         type: Number,
+         min: [1, "Rating must be at least 1"],
+         max: [5, "Rating must be at most 5"]
     }
   
   });
@@ -24,7 +27,6 @@ const dimensions = new mongoose.Schema({
     height:{
         type: Number
     }
-  
   });  
 
 const ProductSchema = new mongoose.Schema({

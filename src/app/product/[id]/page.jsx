@@ -12,7 +12,7 @@ import axios from "axios";
 import Skeleton from "../Skeleton";
 import { Minus, Plus } from "lucide-react";
 import { handleSingleIncrement, handleSingleDecrement } from "@/helper/productHelper";
-
+import RatingForm from "@/components/ratingForm/page"
 
 const ProductPage = ({ params }) => {
 
@@ -134,8 +134,46 @@ const ProductPage = ({ params }) => {
                     {product.description}
                   </p>
                 </div>
-
+         
               </div>
+
+      {/* rating section */} 
+ <div>
+  <h1 className="text-2xl font-semibold mb-4">Product Reviews</h1>
+  <div className="space-y-6">
+    {Array.isArray(product?.reviews) && product.reviews.length > 0 ? (
+      product.reviews.map((review, ind) => (
+        <div
+          key={ind}
+          className="border border-gray-300 rounded-lg p-4 shadow-sm bg-white"
+        >
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-lg font-medium text-gray-800">{review.name}</h2>
+            <div className="flex">
+              {[...Array(5)].map((_, i) => (
+                <svg
+                  key={i}
+                  className={`w-5 h-5 ${
+                    i < review.rating ? "text-yellow-400" : "text-gray-300"
+                  }`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.24 3.808a1 1 0 00.95.69h4.004c.969 0 1.371 1.24.588 1.81l-3.24 2.355a1 1 0 00-.364 1.118l1.24 3.807c.3.922-.755 1.688-1.54 1.118L10 13.348l-3.24 2.355c-.784.57-1.838-.196-1.54-1.118l1.24-3.807a1 1 0 00-.364-1.118L2.856 9.235c-.783-.57-.38-1.81.588-1.81h4.004a1 1 0 00.95-.69l1.24-3.808z" />
+                </svg>
+              ))}
+            </div>
+          </div>
+          <p className="text-gray-600">{review.comment}</p>
+        </div>
+      ))
+    ) : (
+      <p className="text-gray-500">No reviews yet.</p>
+    )}
+  </div>
+</div>
+  <RatingForm/>
+
             </div>
           </section>
           :
