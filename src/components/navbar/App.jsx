@@ -1,12 +1,18 @@
 'use client';
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, ShoppingCart } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import useCart from '@/allContext/cart'; // adjust path as needed
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { data: session } = useSession(); // next-auth session
+  const { data: session } = useSession();
+  const { cartItems } = useCart();
+
+  // Get total quantity of items in the cart
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <header className="border-b bg-white shadow-sm fixed top-0 left-0 w-full z-50">
@@ -29,10 +35,15 @@ const Header = () => {
           }
         </nav>
 
-        {/* Icons (always visible) */}
-        <div className="flex items-center space-x-4">
-          <Link href="/cart">
+        {/* Icons */}
+        <div className="flex items-center space-x-4 relative">
+          <Link href="/cart" className="relative">
             <ShoppingCart className="w-6 h-6 text-black" />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
           </Link>
 
           {/* Mobile Menu Button */}
