@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 
 const App = () => {
@@ -16,7 +17,10 @@ const App = () => {
   const [emailForOtp, setEmailForOtp] = useState("");
   const [loader, setLoader] = useState(false)
   const [googleLoginLoader, setGoogleLoginLoader] = useState(false)
-   const router = useRouter(); 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const router = useRouter();
 
   const {
     register,
@@ -115,7 +119,7 @@ const App = () => {
       toast.error(result.error);
       setGoogleLoginLoader(false)
     }
-    
+
   };
 
   return (
@@ -162,20 +166,39 @@ const App = () => {
                 {...register("email", { required: true })}
                 className="w-full border rounded px-4 py-2 text-sm"
               />
-              <input
-                type="password"
-                placeholder="Password"
-                {...register("password", { required: true })}
-                className="w-full border rounded px-4 py-2 text-sm"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  {...register("password", { required: true })}
+                  className="w-full border rounded px-4 py-2 text-sm pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
 
               {authMode === "signup" && (
-                <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  {...register("confirmPassword", { required: true })}
-                  className="w-full border rounded px-4 py-2 text-sm"
-                />
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder="Confirm Password"
+                    {...register("confirmPassword", { required: true })}
+                    className="w-full border rounded px-4 py-2 text-sm pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+                  >
+                    {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
+
               )}
 
               {authMode === "login" && (
@@ -209,7 +232,7 @@ const App = () => {
               onClick={handleGoogleLogin}
               className={`w-full border text-sm text-gray-700 py-2 rounded hover:bg-gray-100 transition-all ${googleLoginLoader ? `cursor-not-allowed` : `cursor-pointer`}`}
             >
-              {googleLoginLoader ? <Loader2 className="cursor-not-allowed animate-spin mx-auto text-gray-300" /> : <div className="flex gap-1 items-center justify-center"><img src="/images/google-logo.png" className="h-5 w-5"/> <p>Continue with Google</p></div>}
+              {googleLoginLoader ? <Loader2 className="cursor-not-allowed animate-spin mx-auto text-gray-300" /> : <div className="flex gap-1 items-center justify-center"><img src="/images/google-logo.png" className="h-5 w-5" /> <p>Continue with Google</p></div>}
             </button>
           </>
         )}
