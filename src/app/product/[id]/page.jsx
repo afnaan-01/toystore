@@ -148,7 +148,7 @@ const ProductPage = ({ params }) => {
           className="border border-gray-300 rounded-lg p-4 shadow-sm bg-white"
         >
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-lg font-medium text-gray-800">{review.name}</h2>
+            <h2 className="text-lg font-medium text-gray-800">{review.customerName}</h2>
             <div className="flex">
               {[...Array(5)].map((_, i) => (
                 <svg
@@ -172,7 +172,7 @@ const ProductPage = ({ params }) => {
     )}
   </div>
 </div>
-  <RatingForm/>
+  <RatingForm productId={id}/>
 
             </div>
           </section>

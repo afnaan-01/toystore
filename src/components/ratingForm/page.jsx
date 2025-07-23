@@ -3,8 +3,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Star, Send, CheckCircle } from 'lucide-react';
+import { toast } from 'sonner';
+import axios from 'axios';
 
-function App() {
+function App({ productId }) {
+ 
   const [hoveredRating, setHoveredRating] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
@@ -18,28 +21,33 @@ function App() {
     reset
   } = useForm({
     defaultValues: {
-      name: '',
-      review: '',
+      customerName: '',
+      comment: '',
       rating: 0
     }
   });
 
   const onSubmit = async (data) => {
-    setSubmittedData(data);
-    setIsSubmitted(true);
-    try {
-        const response = await axios.post("/api/add-rating", data );
-        if (response.status === 201) {
-          toast.warning(response.data.message);
-          setEmailForOtp(data.email);
-          setOtpSend(true);
-        } else {
-          toast.success(response.data.message);
-        }
-      } catch (error) {
-        toast.error(error.response?.data?.message);
-      }
     
+    try {
+    console.log(data)
+    const payload = {
+      ...data,
+      productId,
+    };
+
+    const response = await axios.post("/api/add-rating", payload);
+
+    if (response.status === 200) {
+      setSubmittedData(data);
+      setIsSubmitted(true);
+    } else {
+       setIsSubmitted(false);
+       reset();
+    }
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Something went wrong");
+  }    
     setTimeout(() => {
       setIsSubmitted(false);
       reset();
@@ -101,7 +109,7 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-center">
+        <div className="bg-black p-6 text-center">
           <h1 className="text-2xl font-bold text-white mb-2">Rate Your Experience</h1>
           <p className="text-blue-100">We'd love to hear your feedback</p>
         </div>
@@ -117,7 +125,7 @@ function App() {
               type="text"
               id="name"
               placeholder="Enter your full name"
-              {...register('name', { required: 'Name is required' })}
+              {...register('customerName', { required: 'Name is required' })}
               className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.name ? 'border-red-300 bg-red-50' : 'border-gray-200 hover:border-gray-300'
               }`}
@@ -134,7 +142,7 @@ function App() {
               id="review"
               rows={4}
               placeholder="Share your thoughts and experience with us..."
-              {...register('review', { required: 'Review is required' })}
+              {...register('comment', { required: 'Review is required' })}
               className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none ${
                 errors.review ? 'border-red-300 bg-red-50' : 'border-gray-200 hover:border-gray-300'
               }`}
@@ -158,7 +166,7 @@ function App() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:from-blue-700 hover:to-purple-700 transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-lg flex items-center justify-center space-x-2"
+            className="w-full bg-black text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:bg-gray-700  transform hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-lg flex items-center justify-center space-x-2"
           >
             <Send size={20} />
             <span>Submit Review</span>

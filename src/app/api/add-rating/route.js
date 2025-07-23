@@ -7,7 +7,7 @@ export async function POST(request) {
 
   try {
       const { productId, customerName, comment, rating } = await request.json();
-      console.log(customerName)
+      
     if (!productId || !customerName || !comment || typeof rating !== "number") {
       return NextResponse.json({
         success: false,
@@ -34,13 +34,13 @@ export async function POST(request) {
       success: true,
       message: "Review added successfully.",
       product,
-    });
+    },{ status: 200 });
   
   }catch (error) {
         console.log("Unexpected error occurred: " + error);
         return NextResponse.json({
             success: false,
-            message: 'There is an error in the API for getting pending identities',
+            message: 'There is unexpected error occurs',
         }, { status: 500 });
     }
 
