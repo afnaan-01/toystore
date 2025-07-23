@@ -6,7 +6,7 @@ import { toast } from "sonner";
 export async function  sendVerificationEmail(email, name, verificationCode ) {
     try {
         await resend.emails.send({
-            from: 'kiddotoy.shop',
+            from: 'otp@kiddotoy.shop',
             to: email,
             subject: 'toyweb | Verification code',
             react: VerificationEmail({name, otp:verificationCode })
