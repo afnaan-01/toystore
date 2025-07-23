@@ -1,10 +1,40 @@
+"use client"
+
 import Header from "@/components/navbar/App";
 import { LucideAArrowDown, Instagram, Mail } from "lucide-react";
+import { useState } from "react";
 
 const ContactUs = () => {
+
+
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus("Sending...");
+
+    const res = await fetch("/api/contact-us", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    if (res.ok) {
+      setStatus("Message Sent!");
+      setForm({ name: "", email: "", message: "" });
+    } else {
+      setStatus("Error sending message");
+    }
+  };
+
   return (
     <div>
-    <Header />
+      <Header />
       <div className="bg-background min-h-screen px-4 py-3">
         {/* Header Section */}
         <div className="text-center mb-3">
@@ -18,7 +48,7 @@ const ContactUs = () => {
 
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-1 gap-10">
           {/* Contact Form */}
-          <form className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
             <h2 className="text-xl font-bold text-dark mb-6">Send Us a Message</h2>
 
             {/* Name */}
@@ -27,6 +57,8 @@ const ContactUs = () => {
               <input
                 name="name"
                 type="text"
+                value={form.name}
+                onChange={handleChange}
                 placeholder="Enter your name"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
               />
@@ -38,6 +70,8 @@ const ContactUs = () => {
               <input
                 type="email"
                 name="email"
+                value={form.email}
+                onChange={handleChange}
                 placeholder="Enter your email"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
               />
@@ -47,7 +81,9 @@ const ContactUs = () => {
             <div className="mb-4">
               <label className="block text-sm font-medium mb-2">Message</label>
               <textarea
-              name="message"
+                name="message"
+                value={form.message}
+                onChange={handleChange}
                 rows="4"
                 placeholder="Write your message"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
