@@ -24,20 +24,18 @@ const Footer = ()=> {
         {/* Support */}
         <div>
           <h3 className="text-lg font-semibold mb-3">Support</h3>
-          <p className="text-sm mb-1">Aara Machine, Nai Abadi, Ardhapur, Nanded IN 431604</p>
-          <p className="text-sm mb-1">support@toystore.com</p>
-          <p className="text-sm">+91 98765 43210</p>
+          <p className="text-sm mb-1">Nanded, Maharashtra India 431605</p>
+          <p className="text-sm mb-1">kaastechnical@gmail.com</p>
+         
         </div>
 
         {/* Account */}
         <div>
           <h3 className="text-lg font-semibold mb-3">Account</h3>
           <ul className="space-y-1 text-sm">
-            <li><a href="#">My Account</a></li>
-            <li><a href="#">Login / Register</a></li>
-            <li><a href="#">Cart</a></li>
-            <li><a href="#">Wishlist</a></li>
-            <li><a href="#">Shop</a></li>
+            <li><a href="/profile">My Account</a></li>
+            <li><a href="/auth">Login / Register</a></li>
+            <li><a href="/cart">Cart</a></li>
           </ul>
         </div>
 
@@ -50,7 +48,7 @@ const Footer = ()=> {
             <li><a href="/privacy-and-policy">Privacy Policy</a></li>
             <li><a href="/terms-and-conditions">Terms and Conditions</a></li>
             <li><a href="/shipping-and-delivery-policy">Shipping Policy</a></li>
-            <li><a href="/shipping-and-refund">Cancellation & Refund</a></li>
+            <li><a href="/cancellation-and-refund">Cancellation & Refund</a></li>
           </ul>
         </div>
 
