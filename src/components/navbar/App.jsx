@@ -6,7 +6,7 @@ import Link from "next/link";
 const Header = () => {
   return (
 
-    <header className=" border border-b-1 bg-white">
+    <header className="border-b-1 bg-white">
       <div className='flex justify-between items-center px-6 py-4 md:max-w-[1350px] mx-auto'>
 
         {/* Logo */}
@@ -14,9 +14,9 @@ const Header = () => {
 
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-6 text-sm font-medium">
-          <a href="/Home" className="border-b-2 border-black pb-1">Home</a>
-          <a href="/contact" className="hover:text-gray-600">Contact</a>
-          <a href="/about" className="hover:text-gray-600">About</a>
+          <a href="/" className="hover:text-gray-600">Home</a>
+          <a href="/contact-us" className="hover:text-gray-600">Contact</a>
+          <a href="/about-us" className="hover:text-gray-600">About</a>
           <a href="/auth" className="hover:text-gray-600">Sign Up</a>
         </nav>
 
