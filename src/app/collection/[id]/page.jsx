@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import React from "react";
-import ProductCard from "@/components/card/App"; // Use the card you already built
-// import { allProducts } from "@/helper/data";
+import ProductCard from "@/components/card/App"; 
 import { collections } from "@/helper/data";
 import Navbar from "@/components/navbar/App";
 import Footer from "@/components/footer/App";
 import axios from "axios";
+import { Loader2 } from "lucide-react";
 
 export default function CollectionPage({params}) {
 
@@ -34,7 +34,11 @@ export default function CollectionPage({params}) {
     <div>
 
       <Navbar />
-
+ {loading ? (
+  <div className="flex justify-center items-center h-60">
+    <Loader2 className="h-10 w-10 animate-spin text-gray-500" />
+  </div>
+) : (
       <div className="px-4 py-8 max-w-7xl mx-auto">
         {/* Page Title & Sort */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
@@ -77,7 +81,7 @@ export default function CollectionPage({params}) {
           </div>
         </div>
       </div>
-
+)}
       <Footer />
     </div>
   );
