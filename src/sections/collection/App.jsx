@@ -33,7 +33,7 @@ const App = () => {
 
     return (
 
-        <div className='bg-blue-400'>
+        <div className='bg-blue-400 sm:pt-16 pt-0'>
             <section className="py-10 max-w-[1350px] mx-auto">
                 <h2 className="text-2xl md:text-4xl font-bold font-quicksand text-white mb-6 text-center">
                     Shop by Collection

@@ -50,7 +50,7 @@ export default function LandingSlider() {
     }, []);
 
     return (
-        <div className='flex-1'>
+        <div className='flex-1 pt-10'>
             <section className={`${banners[current].bgClass} ${banners[current].textClass} w-full h-full transition-all duration-500 ease-in-out transform
         ${animating ? 'animate-slideFadeIn' : 'animate-slideFadeOut'}`}>
                 <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 flex flex-col-reverse md:flex-row items-center gap-8">
