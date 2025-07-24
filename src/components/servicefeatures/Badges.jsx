@@ -15,7 +15,7 @@ export default function ServiceFeatures() {
         {
             icon: <RiCheckboxCircleLine size={24} />,
             title: 'MONEY BACK GUARANTEE',
-            description: 'We return money within 30 days',
+            description: 'We return money within 3 days',
         },
     ];
 

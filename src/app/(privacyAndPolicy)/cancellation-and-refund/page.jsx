@@ -23,7 +23,7 @@ const CancellationAndRefund = () => {
       <h3 className="font-semibold mt-4">✅ Before Shipment:</h3>
       <ul className="list-disc pl-6 mb-4">
         <li>You may cancel your order within <strong>[12 hours]</strong> of placing it or before the product is shipped.</li>
-        <li>To cancel, contact us at <strong>kaastechnical@gmail.com</strong> or <strong>[Phone Number]</strong>.</li>
+        <li>To cancel, contact us at <strong>kaastechnical@gmail.com</strong> .</li>
         <li>If approved, a full refund will be issued.</li>
       </ul>
 

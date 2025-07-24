@@ -3,6 +3,7 @@
 import Header from "@/components/navbar/App";
 import { LucideAArrowDown, Instagram, Mail } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const ContactUs = () => {
 
@@ -26,6 +27,7 @@ const ContactUs = () => {
 
     if (res.ok) {
       setStatus("Message Sent!");
+      toast.success("Message sent successfully!");
       setForm({ name: "", email: "", message: "" });
     } else {
       setStatus("Error sending message");
@@ -59,6 +61,7 @@ const ContactUs = () => {
                 type="text"
                 value={form.name}
                 onChange={handleChange}
+                required
                 placeholder="Enter your name"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
               />
@@ -72,6 +75,7 @@ const ContactUs = () => {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
+                required
                 placeholder="Enter your email"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
               />
@@ -84,6 +88,7 @@ const ContactUs = () => {
                 name="message"
                 value={form.message}
                 onChange={handleChange}
+                required
                 rows="4"
                 placeholder="Write your message"
                 className="w-full border border-border rounded-lg px-4 py-3 focus:ring-2 focus:ring-primary outline-none transition"
