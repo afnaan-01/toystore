@@ -19,7 +19,7 @@ const Header = () => {
       <div className="flex justify-between items-center px-6 py-4 md:max-w-[1350px] mx-auto">
 
         {/* Logo */}
-        <div className="text-2xl font-bold text-black">ToysStore</div>
+        <div className="text-2xl font-bold text-black">KiddoToy</div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-6 text-sm font-medium text-black">
