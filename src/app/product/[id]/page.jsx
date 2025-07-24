@@ -52,7 +52,7 @@ const ProductPage = ({ params }) => {
         // Check for product details 
         product ?
 
-          <section className="px-4 py-7 max-w-6xl mx-auto">
+          <section className="px-4 py-14 max-w-6xl mx-auto">
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-5">
               {/* Product Image */}

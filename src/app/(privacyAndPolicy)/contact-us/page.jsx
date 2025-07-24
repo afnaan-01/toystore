@@ -35,7 +35,7 @@ const ContactUs = () => {
   return (
     <div>
       <Header />
-      <div className="bg-background min-h-screen px-4 py-3">
+      <div className="bg-background min-h-screen px-4 py-20">
         {/* Header Section */}
         <div className="text-center mb-3">
           <h1 className="text-4xl md:text-5xl font-playful text-primary mb-3">
